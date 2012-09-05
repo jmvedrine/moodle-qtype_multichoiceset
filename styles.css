@@ -1,0 +1,12 @@
+.que.multichoiceset .answer .specificfeedback {
+    padding: 0 0.7em;
+    background: #FFF3BF;
+}
+.que.multichoiceset .answer .specificfeedback * {
+    display: inline;
+    background: #FFF3BF;
+}
+.que.multichoiceset .answer div.r0,
+.que.multichoiceset .answer div.r1 {
+    padding: 0.3em;
+}
