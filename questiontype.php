@@ -326,12 +326,12 @@ class qtype_multichoiceset extends question_type {
 /// IMPORT EXPORT FUNCTIONS ////////////////////////////
 
     /**
-     ** Provide export functionality for xml format
-     ** @param question object the question object
-     ** @param format object the format object so that helper methods can be used 
-     ** @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
-     ** @return string the data to append to the output buffer or false if error
-     **/
+     * Provide export functionality for xml format
+     * @param question object the question object
+     * @param format object the format object so that helper methods can be used 
+     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @return string the data to append to the output buffer or false if error
+     */
     public function export_to_xml($question, qformat_xml $format, $extra=null) {
         $expout = '';
         $fs = get_file_storage();
@@ -360,19 +360,15 @@ class qtype_multichoiceset extends question_type {
     }
 
    /**
-    ** Provide import functionality for xml format
-    ** @param data mixed the segment of data containing the question
-    ** @param question object question object processed (so far) by standard imp
-ort code
-    ** @param format object the format object so that helper methods can be used
- (in particular error())
-    ** @param extra mixed any additional format specific data that may be passed
- by the format (see format code for info)
-    ** @return object question object suitable for save_options() call or false 
-if cannot handle
-    **/
+    * Provide import functionality for xml format
+    * @param data mixed the segment of data containing the question
+    * @param question object question object processed (so far) by standard import code
+    * @param format object the format object so that helper methods can be used (in particular error())
+    * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+    * @return object question object suitable for save_options() call or false if cannot handle
+    */
     public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
-        // check question is for us
+        // Check question is for us.
         if (!isset($data['@']['type']) || $data['@']['type'] != 'multichoiceset') {
             return false;
         }
@@ -386,37 +382,7 @@ if cannot handle
         $question->answernumbering = $format->getpath($data,
                 array('#', 'answernumbering', 0, '#'), 'abc');
 
-        $question->correctfeedback = array();
-        $question->correctfeedback['text'] = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'text', 0, '#'), '', true);
-        $question->correctfeedback['format'] = $format->trans_format(
-                 $format->getpath($data, array('#', 'correctfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
-        $question->correctfeedback['files'] = array();
-        // restore files in correctfeedback
-        $files = $format->getpath($data, array('#', 'correctfeedback', 0, '#','file'), array(), false);
-        foreach ($files as $file) {
-            $filesdata = new stdclass;
-            $filesdata->content = $file['#'];
-            $filesdata->encoding = $file['@']['encoding'];
-            $filesdata->name = $file['@']['name'];
-            $question->correctfeedback['files'][] = $filesdata;
-        }
-
-        $question->incorrectfeedback = array();
-        $question->incorrectfeedback['text'] = $format->getpath($data, array('#','incorrectfeedback',0,'#','text',0,'#'), '', true );
-        $question->incorrectfeedback['format'] = $format->trans_format(
-                $format->getpath($data, array('#', 'incorrectfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
-        $question->incorrectfeedback['files'] = array();
-        // restore files in incorrectfeedback
-        $files = $format->getpath($data, array('#', 'incorrectfeedback', 0, '#','file'), array(), false);
-        foreach ($files as $file) {
-            $filesdata = new stdclass;
-            $filesdata->content = $file['#'];
-            $filesdata->encoding = $file['@']['encoding'];
-            $filesdata->name = $file['@']['name'];
-            $question->incorrectfeedback['files'][] = $filesdata;
-        }
-		
-		$question->shownumcorrect = array_key_exists('shownumcorrect', $data['#']);
+        $format->import_combined_feedback($question, $data, true);
 
         // Run through the answers
         $answers = $data['#']['answer'];
