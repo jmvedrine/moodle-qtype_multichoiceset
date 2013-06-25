@@ -26,9 +26,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2012022100;
+$plugin->version   = 2012122100;
 
-$plugin->requires  = 2011102700;
+$plugin->requires  = 2012120300;
 
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
