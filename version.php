@@ -32,7 +32,7 @@ $plugin->requires  = 2013040500;
 
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.1 for Moodle 2.5+';
+$plugin->release   = '1.2 for Moodle 2.5+';
 
 $plugin->dependencies = array(
     'qtype_multichoice' => ANY_VERSION,

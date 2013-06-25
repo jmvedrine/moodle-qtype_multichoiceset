@@ -382,7 +382,37 @@ class qtype_multichoiceset extends question_type {
         $question->answernumbering = $format->getpath($data,
                 array('#', 'answernumbering', 0, '#'), 'abc');
 
-        $format->import_combined_feedback($question, $data, true);
+        $question->correctfeedback = array();
+        $question->correctfeedback['text'] = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'text', 0, '#'), '', true);
+        $question->correctfeedback['format'] = $format->trans_format(
+                 $format->getpath($data, array('#', 'correctfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
+        $question->correctfeedback['files'] = array();
+        // restore files in correctfeedback
+        $files = $format->getpath($data, array('#', 'correctfeedback', 0, '#','file'), array(), false);
+        foreach ($files as $file) {
+            $filesdata = new stdclass;
+            $filesdata->content = $file['#'];
+            $filesdata->encoding = $file['@']['encoding'];
+            $filesdata->name = $file['@']['name'];
+            $question->correctfeedback['files'][] = $filesdata;
+        }
+
+        $question->incorrectfeedback = array();
+        $question->incorrectfeedback['text'] = $format->getpath($data, array('#','incorrectfeedback',0,'#','text',0,'#'), '', true );
+        $question->incorrectfeedback['format'] = $format->trans_format(
+                $format->getpath($data, array('#', 'incorrectfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
+        $question->incorrectfeedback['files'] = array();
+        // restore files in incorrectfeedback
+        $files = $format->getpath($data, array('#', 'incorrectfeedback', 0, '#','file'), array(), false);
+        foreach ($files as $file) {
+            $filesdata = new stdclass;
+            $filesdata->content = $file['#'];
+            $filesdata->encoding = $file['@']['encoding'];
+            $filesdata->name = $file['@']['name'];
+            $question->incorrectfeedback['files'][] = $filesdata;
+        }
+		
+		$question->shownumcorrect = array_key_exists('shownumcorrect', $data['#']);
 
         // Run through the answers
         $answers = $data['#']['answer'];
