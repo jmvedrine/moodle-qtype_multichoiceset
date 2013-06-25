@@ -38,12 +38,6 @@ require_once($CFG->dirroot . '/question/type/multichoiceset/tests/helper.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset_question_test extends advanced_testcase {
-    /**
-     * @return qtype_formulas_question the requested question object.
-     */
-    protected function get_test_formulas_question($which = null) {
-        return test_question_maker::make_question('formulas', $which);
-    }
 
     public function test_get_expected_data() {
         $question = qtype_multichoiceset_test_helper::make_a_multichoiceset_question();
