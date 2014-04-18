@@ -17,8 +17,7 @@
 /**
  * Version information for the multiple choice all or nothing question type.
  *
- * @package    qtype
- * @subpackage multichoice
+ * @package    qtype_multichoiceset
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,13 +25,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2013062400;
+$plugin->version   = 2013110505;
 
-$plugin->requires  = 2013040500;
+$plugin->requires  = 2013110500;
 
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.2 for Moodle 2.5+';
+$plugin->release   = '1.3 for Moodle 2.6+';
 
 $plugin->dependencies = array(
     'qtype_multichoice' => ANY_VERSION,

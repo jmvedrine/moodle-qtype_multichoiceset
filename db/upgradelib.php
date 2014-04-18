@@ -17,15 +17,12 @@
 /**
  * Upgrade library code for the multichoiceset question type.
  *
- * @package    qtype
- * @subpackage multichoiceset
+ * @package    qtype_multichoiceset
  * @copyright  2010 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Class for converting attempt data for multichoiceset questions when upgrading
@@ -40,18 +37,18 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
     protected $order;
 
     public function is_blank_answer($state) {
-        // blank multichoiceset answers are not empty strings, they rather end in a colon
+        // Blank multichoiceset answers are not empty strings, they rather end in a colon.
         return empty($state->answer) || substr($state->answer, -1) == ':';
     }
 
     public function right_answer() {
-		$rightbits = array();
-		foreach ($this->question->options->answers as $ans) {
-			if ($ans->fraction >= 0.000001) {
-				$rightbits[] = $this->to_text($ans->answer);
-			}
-		}
-		return implode('; ', $rightbits);
+        $rightbits = array();
+        foreach ($this->question->options->answers as $ans) {
+            if ($ans->fraction >= 0.000001) {
+                $rightbits[] = $this->to_text($ans->answer);
+            }
+        }
+        return implode('; ', $rightbits);
     }
 
     protected function explode_answer($answer) {
@@ -69,24 +66,24 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
 
     public function response_summary($state) {
         $responses = $this->explode_answer($state->answer);
-		if (!empty($responses)) {
-			$responses = explode(',', $responses);
-			$bits = array();
-			foreach ($responses as $response) {
-				if (array_key_exists($response, $this->question->options->answers)) {
-					$bits[] = $this->to_text(
-							$this->question->options->answers[$response]->answer);
-				} else {
-					$this->logger->log_assumption("Dealing with a place where the
-							student selected a choice that was later deleted for
-							multiple choice question {$this->question->id}");
-					$bits[] = '[CHOICE THAT WAS LATER DELETED]';
-				}
-			}
-			return implode('; ', $bits);
-		} else {
-			return null;
-		}
+        if (!empty($responses)) {
+            $responses = explode(',', $responses);
+            $bits = array();
+            foreach ($responses as $response) {
+                if (array_key_exists($response, $this->question->options->answers)) {
+                    $bits[] = $this->to_text(
+                            $this->question->options->answers[$response]->answer);
+                } else {
+                    $this->logger->log_assumption("Dealing with a place where the
+                            student selected a choice that was later deleted for
+                            multiple choice question {$this->question->id}");
+                    $bits[] = '[CHOICE THAT WAS LATER DELETED]';
+                }
+            }
+            return implode('; ', $bits);
+        } else {
+            return null;
+        }
     }
 
     public function was_answered($state) {
@@ -109,13 +106,13 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
 
     public function set_data_elements_for_step($state, &$data) {
         $responses = $this->explode_answer($state->answer);
-		$responses = explode(',', $responses);
-		foreach ($this->order as $key => $ansid) {
-			if (in_array($ansid, $responses)) {
-				$data['choice' . $key] = 1;
-			} else {
-				$data['choice' . $key] = 0;
-			}
-		}
+        $responses = explode(',', $responses);
+        foreach ($this->order as $key => $ansid) {
+            if (in_array($ansid, $responses)) {
+                $data['choice' . $key] = 1;
+            } else {
+                $data['choice' . $key] = 0;
+            }
+        }
     }
 }

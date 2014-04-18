@@ -21,8 +21,7 @@
  * tests. (Search for test_question_maker::make_a_multichoice.) This file only
  * contains a few additional tests for problems that were found during testing.
  *
- * @package    qtype
- * @subpackage multichoice
+ * @package    qtype_multichoiceset
  * @copyright  2010 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -17,8 +17,7 @@
 /**
  * Unit tests for the multiple choice question definition classes.
  *
- * @package    qtype
- * @subpackage multichoice
+ * @package    qtype_multichoiceset
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -78,7 +77,7 @@ class qtype_multichoiceset_question_test extends advanced_testcase {
 
         $this->assertEquals(array(1, question_state::$gradedright),
                 $question->grade_response(array('choice0' => '1', 'choice2' => '1')));
-        $this->assertEquals(array(0.5, question_state::$gradedwrong),
+        $this->assertEquals(array(0, question_state::$gradedwrong),
                 $question->grade_response(array('choice0' => '1')));
         $this->assertEquals(array(0, question_state::$gradedwrong),
                 $question->grade_response(
@@ -126,7 +125,7 @@ class qtype_multichoiceset_question_test extends advanced_testcase {
 
         $this->assertEquals(array(
                     13 => new question_classified_response(13, 'A', 0.5),
-                    14 => new question_classified_response(14, 'B', -1.0),
+                    14 => new question_classified_response(14, 'B', 0.0),
                 ), $mc->classify_response(array('choice0' => 1, 'choice1' => 1)));
 
         $this->assertEquals(array(), $mc->classify_response(array()));

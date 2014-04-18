@@ -1,45 +1,49 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// This file keeps track of upgrades to
-// the multichoiceset qtype plugin
-//
-// Sometimes, changes between versions involve
-// alterations to database structures and other
-// major things that may break installations.
-//
-// The upgrade function in this file will attempt
-// to perform all the necessary actions to upgrade
-// your older installation to the current version.
-//
-// If there's something it cannot do itself, it
-// will tell you what you need to do.
-//
-// The commands in here will all be database-neutral,
-// using the methods of database_manager class
-//
-// Please do not forget to use upgrade_set_timeout()
-// before any action that may take longer time to finish.
+/**
+ * All or nothing multiple choice question type upgrade code.
+ *
+ * @package    qtype_multichoiceset
+ * @copyright  1999 onwards Martin Dougiamas {@link http://moodle.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 function xmldb_qtype_multichoiceset_upgrade($oldversion) {
-    global $CFG, $DB, $QTYPES;
+    global $CFG, $DB;
 
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2011010400) {
 
-    /// Define field correctfeedbackformat to be added to question_multichoiceset
+        // Define field correctfeedbackformat to be added to question_multichoiceset.
         $table = new xmldb_table('question_multichoiceset');
-        $field = new xmldb_field('correctfeedbackformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'correctfeedback');
+        $field = new xmldb_field('correctfeedbackformat', XMLDB_TYPE_INTEGER, '2',
+                null, XMLDB_NOTNULL, null, '0', 'correctfeedback');
 
-    /// Conditionally launch add field correctfeedbackformat
+        // Conditionally launch add field correctfeedbackformat.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-    /// Define field incorrectfeedbackformat to be added to question_multichoiceset
-        $field = new xmldb_field('incorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'incorrectfeedback');
+        // Define field incorrectfeedbackformat to be added to question_multichoiceset.
+        $field = new xmldb_field('incorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2',
+                null, XMLDB_NOTNULL, null, '0', 'incorrectfeedback');
 
-    /// Conditionally launch add field incorrectfeedbackformat
+        // Conditionally launch add field incorrectfeedbackformat.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -52,7 +56,7 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
         // Because this question type was updated later than the core types,
         // the available/relevant version dates make it hard to differentiate
         // early 2.0 installs from 1.9 updates, hence the extra check for
-        // the presence of oldquestiontextformat
+        // the presence of oldquestiontextformat.
         $table = new xmldb_table('question');
         $field = new xmldb_field('oldquestiontextformat');
         if ($dbman->field_exists($table, $field)) {
@@ -73,35 +77,132 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
                 $DB->update_record('question_multichoiceset', $record);
             }
             $rs->close();
-        } 
-    /// multichoiceset savepoint reached
+        }
+        // Record that qtype_multichoiceset savepoint reached.
         upgrade_plugin_savepoint(true, 2011010400, 'qtype', 'multichoiceset');
     }
-	
+
     // Add new shownumcorrect field. If this is true, then when the user gets a
     // multiple-response question partially correct, tell them how many choices
     // they got correct alongside the feedback.
     if ($oldversion < 2011011200) {
 
-        // Define field shownumcorrect to be added to question_multichoice
+        // Define field shownumcorrect to be added to question_multichoiceset.
         $table = new xmldb_table('question_multichoiceset');
         $field = new xmldb_field('shownumcorrect', XMLDB_TYPE_INTEGER, '2', null,
                 XMLDB_NOTNULL, null, '0', 'answernumbering');
 
-        // Launch add field shownumcorrect
+        // Launch add field shownumcorrect.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // multichoice savepoint reached
+        // Record that qtype_multichoiceset savepoint reached.
         upgrade_plugin_savepoint(true, 2011011200, 'qtype', 'multichoiceset');
     }
 
     // Moodle v2.1.0 release upgrade line
-    // Put any upgrade step following this
+    // Put any upgrade step following this.
 
     // Moodle v2.2.0 release upgrade line
-    // Put any upgrade step following this
+    // Put any upgrade step following this.
+
+    // Moodle v2.3.0 release upgrade line
+    // Put any upgrade step following this.
+
+    // Moodle v2.4.0 release upgrade line
+    // Put any upgrade step following this.
+
+    // Moodle v2.5.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Moodle v2.6.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    if ($oldversion < 2013110500) {
+        // Find duplicate rows before they break the2013110504 step below.
+        $problemids = $DB->get_recordset_sql("
+                SELECT question, MIN(id) AS recordidtokeep
+                  FROM {question_multichoiceset}
+              GROUP BY question
+                HAVING COUNT(1) > 1
+                ");
+        foreach ($problemids as $problem) {
+            $DB->delete_records_select('question_multichoiceset',
+                    'question = ? AND id > ?',
+                    array($problem->question, $problem->recordidtokeep));
+        }
+        $problemids->close();
+
+        // Record that qtype_multichoiceset savepoint reached.
+        upgrade_plugin_savepoint(true, 2013110500, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 22013110501) {
+
+        // Define table question_multichoiceset to be renamed to qtype_multichoiceset_options.
+        $table = new xmldb_table('question_multichoiceset');
+
+        // Launch rename table for question_multichoiceset.
+        $dbman->rename_table($table, 'qtype_multichoiceset_options');
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2013110501, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 2013110502) {
+
+        // Define key question (foreign) to be dropped form qtype_multichoiceset_options.
+        $table = new xmldb_table('qtype_multichoiceset_options');
+        $key = new xmldb_key('question', XMLDB_KEY_FOREIGN, array('question'), 'question', array('id'));
+
+        // Launch drop key question.
+        $dbman->drop_key($table, $key);
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2013110502, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 2013110503) {
+
+        // Rename field question on table qtype_multichoiceset_options to questionid.
+        $table = new xmldb_table('qtype_multichoiceset_options');
+        $field = new xmldb_field('question', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
+
+        // Launch rename field question.
+        $dbman->rename_field($table, $field, 'questionid');
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2013110503, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 2013110504) {
+
+        // Define key questionid (foreign-unique) to be added to qtype_multichoiceset_options.
+        $table = new xmldb_table('qtype_multichoiceset_options');
+        $key = new xmldb_key('questionid', XMLDB_KEY_FOREIGN_UNIQUE, array('questionid'), 'question', array('id'));
+
+        // Launch add key questionid.
+        $dbman->add_key($table, $key);
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2013110504, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 2013110505) {
+
+        // Define field answers to be dropped from qtype_multichoiceset_options.
+        $table = new xmldb_table('qtype_multichoiceset_options');
+        $field = new xmldb_field('answers');
+
+        // Conditionally launch drop field answers.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2013110505, 'qtype', 'multichoiceset');
+    }
     return true;
 }
 

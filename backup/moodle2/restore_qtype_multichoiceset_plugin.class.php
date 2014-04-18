@@ -15,8 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    moodlecore
- * @subpackage backup-moodle2
+ * @package    qtype_multichoiceset
  * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -41,15 +40,16 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
 
         $paths = array();
 
-        // This qtype uses question_answers, add them
+        // This qtype uses question_answers, add them.
         $this->add_question_question_answers($paths);
 
-        // Add own qtype stuff
+        // Add own qtype stuff.
         $elename = 'multichoiceset';
-        $elepath = $this->get_pathfor('/multichoiceset'); // we used get_recommended_name() so this works
+        // We used get_recommended_name() so this works.
+        $elepath = $this->get_pathfor('/multichoiceset');
         $paths[] = new restore_path_element($elename, $elepath);
 
-        return $paths; // And we return the interesting paths
+        return $paths; // And we return the interesting paths.
     }
 
     /**
@@ -61,29 +61,20 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
         $data = (object)$data;
         $oldid = $data->id;
 
-        // Detect if the question is created or mapped
+        // Detect if the question is created or mapped.
         $oldquestionid   = $this->get_old_parentid('question');
         $newquestionid   = $this->get_new_parentid('question');
         $questioncreated = (bool) $this->get_mappingid('question_created', $oldquestionid);
 
-        // If the question has been created by restore, we need to create its question_multichoiceset too
+        // If the question has been created by restore, we need to create its
+        // qtype_multichoiceset_options too.
         if ($questioncreated) {
-            // Adjust some columns
-            $data->question = $newquestionid;
-            // Map sequence of question_answer ids
-            if ($data->answers) {
-                $answersarr = explode(',', $data->answers);
-            } else {
-                $answersarr = array();
-            }
-            foreach ($answersarr as $key => $answer) {
-                $answersarr[$key] = $this->get_mappingid('question_answer', $answer);
-            }
-            $data->answers = implode(',', $answersarr);
-            // Insert record
-            $newitemid = $DB->insert_record('question_multichoiceset', $data);
-            // Create mapping (needed for decoding links)
-            $this->set_mapping('question_multichoiceset', $oldid, $newitemid);
+            // Adjust some columns.
+            $data->questionid = $newquestionid;
+            // Insert record.
+            $newitemid = $DB->insert_record('qtype_multichoiceset_options', $data);
+            // Create mapping (needed for decoding links).
+            $this->set_mapping('qtype_multichoiceset_options', $oldid, $newitemid);
         }
     }
 
@@ -122,12 +113,12 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
         $orderarr = array();
         $responsesarr = array();
         $lists = explode(':', $answer);
-        // if only 1 list, answer is missing the order list, adjust
+        // If only 1 list, answer is missing the order list, adjust.
         if (count($lists) == 1) {
-            $lists[1] = $lists[0]; // here we have the responses
-            $lists[0] = '';        // here we have the order
+            $lists[1] = $lists[0]; // Here we have the responses.
+            $lists[0] = '';        // Here we have the order.
         }
-        // Map order
+        // Map order.
         if (!empty($lists[0])) {
             foreach (explode(',', $lists[0]) as $id) {
                 if ($newid = $this->get_mappingid('question_answer', $id)) {
@@ -135,7 +126,7 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
                 }
             }
         }
-        // Map responses
+        // Map responses.
         if (!empty($lists[1])) {
             foreach (explode(',', $lists[1]) as $id) {
                 if ($newid = $this->get_mappingid('question_answer', $id)) {
@@ -143,7 +134,7 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
                 }
             }
         }
-        // Build the final answer, if not order, only responses
+        // Build the final answer, if not order, only responses.
         $result = '';
         if (empty($orderarr)) {
             $result = implode(',', $responsesarr);
@@ -161,7 +152,8 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
         $contents = array();
 
         $fields = array('correctfeedback', 'incorrectfeedback');
-        $contents[] = new restore_decode_content('question_multichoiceset', $fields, 'question_multichoiceset');
+        $contents[] = new restore_decode_content('qtype_multichoiceset_options',
+                $fields, 'qtype_multichoiceset_options');
 
         return $contents;
     }

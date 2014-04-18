@@ -17,8 +17,7 @@
 /**
  * Unit tests for the mulitple choice question definition class.
  *
- * @package    qtype
- * @subpackage multichoice
+ * @package    qtype_multichoiceset
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -17,8 +17,7 @@
 /**
  * Defines the editing form for the multichoiceset question type.
  *
- * @package    qtype
- * @subpackage multichoiceset
+ * @package    qtype_multichoiceset
  * @copyright  2007 Jamie Pratt
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -53,19 +52,21 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         $this->add_per_answer_fields($mform, get_string('choiceno', 'qtype_multichoice', '{no}'),
                 null, max(5, QUESTION_NUMANS_START));
 
-        $mform->addElement('header', 'overallfeedbackhdr', get_string('overallfeedback', 'qtype_multichoice'));
+        $mform->addElement('header', 'overallfeedbackhdr', get_string('combinedfeedback', 'question'));
 
         foreach (array('correctfeedback', 'incorrectfeedback') as $feedbackname) {
-            $mform->addElement('editor', $feedbackname, get_string($feedbackname, 'qtype_multichoice'),
-                                array('rows' => 10), $this->editoroptions);
+            $element = $mform->addElement('editor', $feedbackname, get_string($feedbackname, 'question'),
+                                array('rows' => 5), $this->editoroptions);
             $mform->setType($feedbackname, PARAM_RAW);
+            $element->setValue(array('text' => get_string($feedbackname.'default', 'question')));
+
             if ($feedbackname == 'incorrectfeedback') {
                 $mform->addElement('advcheckbox', 'shownumcorrect',
                         get_string('options', 'question'),
                         get_string('shownumpartscorrect', 'question'));
             }
         }
-		
+
         $this->add_interactive_settings(true, true);
     }
 
@@ -116,31 +117,31 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         }
 
         if (!empty($question->options)) {
-            $question->shuffleanswers =  $question->options->shuffleanswers;
-            $question->answernumbering =  $question->options->answernumbering;
-			$question->shownumcorrect = $question->options->shownumcorrect;
-            // prepare feedback editor to display files in draft area
+            $question->shuffleanswers = $question->options->shuffleanswers;
+            $question->answernumbering = $question->options->answernumbering;
+            $question->shownumcorrect = $question->options->shownumcorrect;
+            // Prepare feedback editor to display files in draft area.
             foreach (array('correctfeedback', 'incorrectfeedback') as $feedbackname) {
                 $draftid = file_get_submitted_draft_itemid($feedbackname);
                 $text = $question->options->$feedbackname;
                 $feedbackformat = $feedbackname . 'format';
                 $format = $question->options->$feedbackformat;
-                $default_values[$feedbackname] = array();
-                $default_values[$feedbackname]['text'] = file_prepare_draft_area(
-                    $draftid,       // draftid
-                    $this->context->id,    // context
-                    'qtype_multichoiceset',   // component
-                    $feedbackname,         // filarea
-                    !empty($question->id)?(int)$question->id:null, // itemid
-                    $this->fileoptions,    // options
-                    $text      // text
+                $defaultvalues[$feedbackname] = array();
+                $defaultvalues[$feedbackname]['text'] = file_prepare_draft_area(
+                    $draftid,
+                    $this->context->id,
+                    'qtype_multichoiceset',
+                    $feedbackname,
+                    !empty($question->id) ? (int)$question->id : null,
+                    $this->fileoptions,
+                    $text
                 );
-                $default_values[$feedbackname]['format'] = $format;
-                $default_values[$feedbackname]['itemid'] = $draftid;
+                $defaultvalues[$feedbackname]['format'] = $format;
+                $defaultvalues[$feedbackname]['itemid'] = $draftid;
             }
-	        // prepare files code block ends
+            // Prepare files code block ends.
 
-            $question = (object)((array)$question + $default_values);
+            $question = (object)((array)$question + $defaultvalues);
         }
         return $question;
     }
@@ -163,12 +164,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
             }
         }
 
-        // Perform sanity checks on number of correct answers
+        // Perform sanity checks on number of correct answers.
         if ($numberofcorrectanswers == 0) {
             $errors['answer[0]'] = get_string('errnocorrect', 'qtype_multichoiceset');
         }
 
-        // Perform sanity checks on number of answers
+        // Perform sanity checks on number of answers.
         if ($answercount == 0) {
             $errors['answer[0]'] = get_string('notenoughanswers', 'qtype_multichoice', 2);
             $errors['answer[1]'] = get_string('notenoughanswers', 'qtype_multichoice', 2);

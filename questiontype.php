@@ -17,8 +17,7 @@
 /**
  * The questiontype class for the multiple choice question type.
  *
- * @package    qtype
- * @subpackage multichoiceset
+ * @package    qtype_multichoiceset
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -41,14 +40,10 @@ class qtype_multichoiceset extends question_type {
         return true;
     }
 
-    public function requires_qtypes() {
-        return array('multichoice');
-    }
-
     public function get_question_options($question) {
         global $DB, $OUTPUT;
-        $question->options = $DB->get_record('question_multichoiceset',
-                array('question' => $question->id), '*', MUST_EXIST);
+        $question->options = $DB->get_record('qtype_multichoiceset_options',
+                array('questionid' => $question->id), '*', MUST_EXIST);
         parent::get_question_options($question);
     }
 
@@ -60,22 +55,21 @@ class qtype_multichoiceset extends question_type {
         $oldanswers = $DB->get_records('question_answers',
                 array('question' => $question->id), 'id ASC');
 
-        // following hack to check at least two answers exist
+        // Following hack to check at least two answers exist.
         $answercount = 0;
         foreach ($question->answer as $key => $answer) {
             if ($answer != '') {
                 $answercount++;
             }
         }
-        if ($answercount < 2) { // check there are at lest 2 answers for multiple choice
+        if ($answercount < 2) { // Check there are at lest 2 answers for multiple choice.
             $result->notice = get_string('notenoughanswers', 'qtype_multichoice', '2');
             return $result;
         }
 
-        // Insert all the new answers
+        // Insert all the new answers.
         $totalfraction = 0;
         $maxfraction = -1;
-        $answers = array();
         foreach ($question->answer as $key => $answerdata) {
             if (trim($answerdata['text']) == '') {
                 continue;
@@ -92,12 +86,12 @@ class qtype_multichoiceset extends question_type {
             }
 
             if (is_array($answerdata)) {
-                // Doing an import
+                // Doing an import.
                 $answer->answer = $this->import_or_save_files($answerdata,
                         $context, 'question', 'answer', $answer->id);
                 $answer->answerformat = $answerdata['format'];
             } else {
-                // Saving the form
+                // Saving the form.
                 $answer->answer = $answerdata;
                 $answer->answerformat = FORMAT_HTML;
             }
@@ -107,7 +101,6 @@ class qtype_multichoiceset extends question_type {
             $answer->feedbackformat = $question->feedback[$key]['format'];
 
             $DB->update_record('question_answers', $answer);
-            $answers[] = $answer->id;
         }
 
         // Delete any left over old answer records.
@@ -117,16 +110,15 @@ class qtype_multichoiceset extends question_type {
             $DB->delete_records('question_answers', array('id' => $oldanswer->id));
         }
 
-        $options = $DB->get_record('question_multichoiceset', array('question' => $question->id));
+        $options = $DB->get_record('qtype_multichoiceset_options', array('questionid' => $question->id));
         if (!$options) {
             $options = new stdClass();
-            $options->question = $question->id;
+            $options->questionid = $question->id;
             $options->correctfeedback = '';
             $options->incorrectfeedback = '';
-            $options->id = $DB->insert_record('question_multichoiceset', $options);
+            $options->id = $DB->insert_record('qtype_multichoiceset_options', $options);
         }
 
-        $options->answers = implode(',', $answers);
         if (isset($question->layout)) {
             $options->layout = $question->layout;
         }
@@ -138,10 +130,9 @@ class qtype_multichoiceset extends question_type {
         $options->incorrectfeedback = $this->import_or_save_files($question->incorrectfeedback,
                 $context, 'qtype_multichoiceset', 'incorrectfeedback', $question->id);
         $options->incorrectfeedbackformat = $question->incorrectfeedback['format'];
-		$options->shownumcorrect = !empty($question->shownumcorrect);
-        
+        $options->shownumcorrect = !empty($question->shownumcorrect);
 
-        $DB->update_record('question_multichoiceset', $options);
+        $DB->update_record('qtype_multichoiceset_options', $options);
         $this->save_hints($question, true);
     }
 
@@ -254,7 +245,7 @@ class qtype_multichoiceset extends question_type {
 
     public function delete_question($questionid, $contextid) {
         global $DB;
-        $DB->delete_records('question_multichoiceset', array('question' => $questionid));
+        $DB->delete_records('qtype_multichoiceset_options', array('questionid' => $questionid));
         return parent::delete_question($questionid, $contextid);
     }
 
@@ -323,12 +314,12 @@ class qtype_multichoiceset extends question_type {
     }
 
 
-/// IMPORT EXPORT FUNCTIONS ////////////////////////////
+    // IMPORT EXPORT FUNCTIONS.
 
     /**
      * Provide export functionality for xml format
      * @param question object the question object
-     * @param format object the format object so that helper methods can be used 
+     * @param format object the format object so that helper methods can be used
      * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
@@ -341,16 +332,18 @@ class qtype_multichoiceset extends question_type {
 
         $textformat = $format->get_format($question->options->correctfeedbackformat);
         $files = $fs->get_area_files($contextid, 'qtype_multichoiceset', 'correctfeedback', $question->id);
-        $expout .= "    <correctfeedback format=\"$textformat\">\n".'      ' . $format->writetext($question->options->correctfeedback);
+        $expout .= "    <correctfeedback format=\"$textformat\">\n"
+                . '      ' . $format->writetext($question->options->correctfeedback);
         $expout .= $format->write_files($files);
         $expout .= "    </correctfeedback>\n";
-        
+
         $textformat = $format->get_format($question->options->incorrectfeedbackformat);
         $files = $fs->get_area_files($contextid, 'qtype_multichoiceset', 'incorrectfeedback', $question->id);
-        $expout .= "    <incorrectfeedback format=\"$textformat\">\n".'      ' . $format->writetext($question->options->incorrectfeedback);
+        $expout .= "    <incorrectfeedback format=\"$textformat\">\n"
+                . '      ' . $format->writetext($question->options->incorrectfeedback);
         $expout .= $format->write_files($files);
         $expout .= "    </incorrectfeedback>\n";
-		if (!empty($question->options->shownumcorrect)) {
+        if (!empty($question->options->shownumcorrect)) {
             $expout .= "    <shownumcorrect/>\n";
         }
         $expout .= "    <answernumbering>{$question->options->answernumbering}</answernumbering>\n";
@@ -359,14 +352,14 @@ class qtype_multichoiceset extends question_type {
         return $expout;
     }
 
-   /**
-    * Provide import functionality for xml format
-    * @param data mixed the segment of data containing the question
-    * @param question object question object processed (so far) by standard import code
-    * @param format object the format object so that helper methods can be used (in particular error())
-    * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
-    * @return object question object suitable for save_options() call or false if cannot handle
-    */
+    /**
+     * Provide import functionality for xml format
+     * @param data mixed the segment of data containing the question
+     * @param question object question object processed (so far) by standard import code
+     * @param format object the format object so that helper methods can be used (in particular error())
+     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @return object question object suitable for save_options() call or false if cannot handle
+     */
     public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
         // Check question is for us.
         if (!isset($data['@']['type']) || $data['@']['type'] != 'multichoiceset') {
@@ -383,12 +376,14 @@ class qtype_multichoiceset extends question_type {
                 array('#', 'answernumbering', 0, '#'), 'abc');
 
         $question->correctfeedback = array();
-        $question->correctfeedback['text'] = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'text', 0, '#'), '', true);
+        $question->correctfeedback['text'] = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'text', 0, '#'),
+                '', true);
         $question->correctfeedback['format'] = $format->trans_format(
-                 $format->getpath($data, array('#', 'correctfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
+                 $format->getpath($data, array('#', 'correctfeedback', 0, '@', 'format'),
+                 $format->get_format($question->questiontextformat)));
         $question->correctfeedback['files'] = array();
-        // restore files in correctfeedback
-        $files = $format->getpath($data, array('#', 'correctfeedback', 0, '#','file'), array(), false);
+        // Restore files in correctfeedback.
+        $files = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'file'), array(), false);
         foreach ($files as $file) {
             $filesdata = new stdclass;
             $filesdata->content = $file['#'];
@@ -398,12 +393,14 @@ class qtype_multichoiceset extends question_type {
         }
 
         $question->incorrectfeedback = array();
-        $question->incorrectfeedback['text'] = $format->getpath($data, array('#','incorrectfeedback',0,'#','text',0,'#'), '', true );
+        $question->incorrectfeedback['text'] = $format->getpath($data, array('#', 'incorrectfeedback', 0, '#', 'text', 0, '#'),
+                '', true );
         $question->incorrectfeedback['format'] = $format->trans_format(
-                $format->getpath($data, array('#', 'incorrectfeedback', 0, '@', 'format'), $format->get_format($question->questiontextformat)));
+                $format->getpath($data, array('#', 'incorrectfeedback', 0, '@', 'format'),
+                $format->get_format($question->questiontextformat)));
         $question->incorrectfeedback['files'] = array();
-        // restore files in incorrectfeedback
-        $files = $format->getpath($data, array('#', 'incorrectfeedback', 0, '#','file'), array(), false);
+        // Restore files in incorrectfeedback.
+        $files = $format->getpath($data, array('#', 'incorrectfeedback', 0, '#', 'file'), array(), false);
         foreach ($files as $file) {
             $filesdata = new stdclass;
             $filesdata->content = $file['#'];
@@ -411,10 +408,10 @@ class qtype_multichoiceset extends question_type {
             $filesdata->name = $file['@']['name'];
             $question->incorrectfeedback['files'][] = $filesdata;
         }
-		
-		$question->shownumcorrect = array_key_exists('shownumcorrect', $data['#']);
 
-        // Run through the answers
+        $question->shownumcorrect = array_key_exists('shownumcorrect', $data['#']);
+
+        // Run through the answers.
         $answers = $data['#']['answer'];
         foreach ($answers as $answer) {
             $ans = $format->import_answer($answer, true,

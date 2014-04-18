@@ -4,7 +4,7 @@ All or Nothing Question
 This is a multiple-choice, multiple-response question type that was created by
 Adriane Boyd (adrianeboyd@gmail.com) and is now maintained by Jean-Michel Vedrine (vedrine@univ-st-etienne.fr).
 
-This version can be used with Moodle 2.5 and ulterior 2.5.x versions.
+This version can be used with Moodle 2.6 and ulterior 2.6.x versions.
 
 ###Description:
 
@@ -28,7 +28,7 @@ Before using this questiontype, teachers must really think if this grading is wh
 To install using git, type this command in the
 root of your Moodle install:
 
-    git clone git://github.com/moodleou/moodle-qtype_combined.git question/type/multichoiceset
+    git clone git://github.com/jmvedrine/moodle-qtype_multichoiceset.git question/type/multichoiceset
     echo '/question/type/multichoiceset' >> .git/info/exclude
 
 ####Installation From Downloaded zip file

@@ -17,8 +17,7 @@
 /**
  * Contains the helper class for the select missing words question type tests.
  *
- * @package    qtype
- * @subpackage multichoiceset
+ * @package    qtype_multichoiceset
  * @copyright  2011 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -37,12 +36,12 @@ class qtype_multichoiceset_test_helper {
     /**
      * Makes a multichoice all or nothing question with choices 'A', 'B', 'C' and 'D' shuffled.
      * 'A' and 'C' is correct, defaultmark 1.
-     * @return qtype_multichoice_multi_question
+     * @return qtype_multichoiceset_question
      */
     public static function make_a_multichoiceset_question() {
         question_bank::load_question_definition_classes('multichoiceset');
         $mc = new qtype_multichoiceset_question();
-        self::initialise_a_question($mc);
+        test_question_maker::initialise_a_question($mc);
         $mc->name = 'Multi-choice all or nothing question';
         $mc->questiontext = 'The answer is A and C.';
         $mc->generalfeedback = 'You should have selected A and C.';
@@ -51,7 +50,7 @@ class qtype_multichoiceset_test_helper {
         $mc->shuffleanswers = 1;
         $mc->answernumbering = 'abc';
 
-        self::set_standard_combined_feedback_fields($mc);
+        test_question_maker::set_standard_combined_feedback_fields($mc);
 
         $mc->answers = array(
             13 => new question_answer(13, 'A', 0.5, 'A is part of the right answer', FORMAT_HTML),

@@ -17,8 +17,7 @@
 /**
  * Multiple choice question definition classes.
  *
- * @package    qtype
- * @subpackage multichoiceset
+ * @package    qtype_multichoiceset
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -41,9 +40,9 @@ class qtype_multichoiceset_question extends qtype_multichoice_multi_question {
         list($numright, $total) = $this->get_num_parts_right($response);
         $numwrong = $this->get_num_selected_choices($response) - $numright;
         $numcorrect = $this->get_num_correct_choices();
-		if ($numwrong == 0 && $numcorrect == $numright) {
-		    $fraction = 1;
-		}
+        if ($numwrong == 0 && $numcorrect == $numright) {
+            $fraction = 1;
+        }
 
         $state = question_state::graded_state_for_fraction($fraction);
 
