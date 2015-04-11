@@ -4,7 +4,7 @@ All or Nothing Question
 This is a multiple-choice, multiple-response question type that was created by
 Adriane Boyd (adrianeboyd@gmail.com) and is now maintained by Jean-Michel Vedrine (vedrine@univ-st-etienne.fr).
 
-This version can be used with Moodle 2.6 and ulterior 2.6.x versions.
+This version can be used with Moodle 2.6, 2.7, 2.8 ad 2.9 versions.
 
 ###Description:
 
@@ -22,6 +22,9 @@ If he/she chooses any incorrect choices or does not select all of the correct ch
 Before using this questiontype, teachers must really think if this grading is what they want.
 
 ###Installation
+
+####Installation from the Moodle plugins Directory
+This question type is available at https://moodle.org/plugins/view/qtype_multichoiceset
 
 ####Installation Using Git
 

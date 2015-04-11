@@ -138,13 +138,15 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2013110500, 'qtype', 'multichoiceset');
     }
 
-    if ($oldversion < 22013110501) {
+    if ($oldversion < 2013110501) {
 
         // Define table question_multichoiceset to be renamed to qtype_multichoiceset_options.
         $table = new xmldb_table('question_multichoiceset');
 
         // Launch rename table for question_multichoiceset.
-        $dbman->rename_table($table, 'qtype_multichoiceset_options');
+        if ($dbman->table_exists($table)) {
+            $dbman->rename_table($table, 'qtype_multichoiceset_options');
+        }
 
         // Record that qtype_multichoiceset savepoint was reached.
         upgrade_plugin_savepoint(true, 2013110501, 'qtype', 'multichoiceset');
@@ -170,7 +172,9 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
         $field = new xmldb_field('question', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
 
         // Launch rename field question.
-        $dbman->rename_field($table, $field, 'questionid');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->rename_field($table, $field, 'questionid');
+        }
 
         // Record that qtype_multichoiceset savepoint was reached.
         upgrade_plugin_savepoint(true, 2013110503, 'qtype', 'multichoiceset');
@@ -202,6 +206,17 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
 
         // Record that qtype_multichoiceset savepoint was reached.
         upgrade_plugin_savepoint(true, 2013110505, 'qtype', 'multichoiceset');
+    }
+
+    if ($oldversion < 2015040100) {
+
+        // Fix wrong component for combined feedback files.
+        $params = array('component' => 'qtype_multichoiceset', 'filearea1' => 'correctfeedback', 'filearea2' => 'incorrectfeedback');
+        $sql = "component = :component AND (filearea = :filearea1 OR filearea = :filearea2)";
+        $DB->set_field_select('files', 'component', 'question', $sql, $params);
+
+        // Record that qtype_multichoiceset savepoint was reached.
+        upgrade_plugin_savepoint(true, 2015040100, 'qtype', 'multichoiceset');
     }
     return true;
 }

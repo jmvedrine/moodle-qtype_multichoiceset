@@ -125,10 +125,10 @@ class qtype_multichoiceset extends question_type {
         $options->answernumbering = $question->answernumbering;
         $options->shuffleanswers = $question->shuffleanswers;
         $options->correctfeedback = $this->import_or_save_files($question->correctfeedback,
-                $context, 'qtype_multichoiceset', 'correctfeedback', $question->id);
+                $context, 'question', 'correctfeedback', $question->id);
         $options->correctfeedbackformat = $question->correctfeedback['format'];
         $options->incorrectfeedback = $this->import_or_save_files($question->incorrectfeedback,
-                $context, 'qtype_multichoiceset', 'incorrectfeedback', $question->id);
+                $context, 'question', 'incorrectfeedback', $question->id);
         $options->incorrectfeedbackformat = $question->incorrectfeedback['format'];
         $options->shownumcorrect = !empty($question->shownumcorrect);
 
@@ -299,9 +299,9 @@ class qtype_multichoiceset extends question_type {
         $this->move_files_in_answers($questionid, $oldcontextid, $newcontextid, true);
 
         $fs->move_area_files_to_new_context($oldcontextid,
-                $newcontextid, 'qtype_multichoiceset', 'correctfeedback', $questionid);
+                $newcontextid, 'question', 'correctfeedback', $questionid);
         $fs->move_area_files_to_new_context($oldcontextid,
-                $newcontextid, 'qtype_multichoiceset', 'incorrectfeedback', $questionid);
+                $newcontextid, 'question', 'incorrectfeedback', $questionid);
     }
 
     protected function delete_files($questionid, $contextid) {
@@ -309,8 +309,8 @@ class qtype_multichoiceset extends question_type {
 
         parent::delete_files($questionid, $contextid);
         $this->delete_files_in_answers($questionid, $contextid, true);
-        $fs->delete_area_files($contextid, 'qtype_multichoiceset', 'correctfeedback', $questionid);
-        $fs->delete_area_files($contextid, 'qtype_multichoiceset', 'incorrectfeedback', $questionid);
+        $fs->delete_area_files($contextid, 'question', 'correctfeedback', $questionid);
+        $fs->delete_area_files($contextid, 'question', 'incorrectfeedback', $questionid);
     }
 
 
@@ -331,14 +331,14 @@ class qtype_multichoiceset extends question_type {
         $expout .= "    <shuffleanswers>".$format->get_single($question->options->shuffleanswers)."</shuffleanswers>\n";
 
         $textformat = $format->get_format($question->options->correctfeedbackformat);
-        $files = $fs->get_area_files($contextid, 'qtype_multichoiceset', 'correctfeedback', $question->id);
+        $files = $fs->get_area_files($contextid, 'question', 'correctfeedback', $question->id);
         $expout .= "    <correctfeedback format=\"$textformat\">\n"
                 . '      ' . $format->writetext($question->options->correctfeedback);
         $expout .= $format->write_files($files);
         $expout .= "    </correctfeedback>\n";
 
         $textformat = $format->get_format($question->options->incorrectfeedbackformat);
-        $files = $fs->get_area_files($contextid, 'qtype_multichoiceset', 'incorrectfeedback', $question->id);
+        $files = $fs->get_area_files($contextid, 'question', 'incorrectfeedback', $question->id);
         $expout .= "    <incorrectfeedback format=\"$textformat\">\n"
                 . '      ' . $format->writetext($question->options->incorrectfeedback);
         $expout .= $format->write_files($files);

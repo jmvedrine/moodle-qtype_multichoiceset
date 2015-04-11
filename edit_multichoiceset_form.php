@@ -130,7 +130,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
                 $defaultvalues[$feedbackname]['text'] = file_prepare_draft_area(
                     $draftid,
                     $this->context->id,
-                    'qtype_multichoiceset',
+                    'question',
                     $feedbackname,
                     !empty($question->id) ? (int)$question->id : null,
                     $this->fileoptions,
