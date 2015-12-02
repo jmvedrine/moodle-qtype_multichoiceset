@@ -480,4 +480,54 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
         parent::adjust_display_options($options);
         $options->suppresschoicefeedback = !$this->showchoicefeedback;
     }
+
+    /**
+     * Support import/export for wordtable format and export for htmltable format
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
+     * Just call the corresponding XML functions
+     */
+
+    /**
+     * Export to WordTable format
+     *
+     * A string containing XML is returned
+     *
+     * @param object $question the question definition data
+     * @param object $format the qformat_xml object to be filled in
+     * @param mixed $extra any additional format specific data that may be passed by the format
+     * @return string the data to export
+     */
+    public function export_to_wordtable($question, qformat_xml $format, $extra=null) {
+        return $this->export_to_xml($question, $format, $extra);
+    }
+
+    /**
+     * Import from WordTable format
+     *
+     * A string containing XML is returned
+     *
+     * @param string $data questions inside an XML string, after being converted from Word
+     * @param object $question the question definition data
+     * @param object $format the qformat_xml object to be filled in
+     * @param mixed $extra any additional format specific data that may be passed by the format
+     * @return object the question definition data
+     */
+    public function import_from_wordtable($data, $question, qformat_xml $format, $extra=null) {
+        return $this->import_from_xml($data, $question, $format, $extra);
+    }
+
+    /**
+     * Export to HTML format
+     *
+     * A string containing XML is returned
+     *
+     * @param object $question the question definition data
+     * @param object $format the qformat_xml object to be filled in
+     * @param mixed $extra any additional format specific data that may be passed by the format
+     * @return string the data to export
+     */
+    public function export_to_htmltable($question, qformat_xml $format, $extra=null) {
+        return $this->export_to_xml($question, $format, $extra);
+    }
 }

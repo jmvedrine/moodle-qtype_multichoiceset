@@ -6,6 +6,9 @@ Adriane Boyd (adrianeboyd@gmail.com) and is now maintained by Jean-Michel Vedrin
 
 This version can be used with Moodle 2.6 and ulterior 2.6.x versions.
 
+This fork was created by Eoin Campbell in order to add support for the WordTable
+and HTMLTable import/export formats.
+
 ###Description:
 
 The all or nothing question is adapted from the existing multichoice question.
@@ -28,12 +31,12 @@ Before using this questiontype, teachers must really think if this grading is wh
 To install using git, type this command in the
 root of your Moodle install:
 
-    git clone git://github.com/jmvedrine/moodle-qtype_multichoiceset.git question/type/multichoiceset
+    git clone git://github.com/ecampbell/moodle-qtype_multichoiceset.git question/type/multichoiceset
     echo '/question/type/multichoiceset' >> .git/info/exclude
 
 ####Installation From Downloaded zip file
 
 Alternatively, download the zip from:
-  https://github.com/jmvedrine/moodle-qtype_multichoiceset/archive/master.zip
+  https://github.com/ecampbell/moodle-qtype_multichoiceset/archive/master.zip
 
 unzip it into the question/type folder, and then rename the new folder to multichoiceset.
