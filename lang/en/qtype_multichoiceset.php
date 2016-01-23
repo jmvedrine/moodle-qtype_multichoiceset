@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['deletedchoice'] = 'This choice was deleted after the attempt was started.';
 $string['distractor'] = 'Incorrect';
 $string['errnocorrect'] = 'At least one of the choices should be correct so that it is possible to get a full grade for this question.';
 $string['included'] = 'Correct';

@@ -243,6 +243,11 @@ class qtype_multichoiceset extends question_type {
         $this->initialise_question_answers($question, $questiondata, false);
     }
 
+    public function make_answer($answer) {
+        // Overridden just so we can make it public for use by question.php.
+        return parent::make_answer($answer);
+    }
+
     public function delete_question($questionid, $contextid) {
         global $DB;
         $DB->delete_records('qtype_multichoiceset_options', array('questionid' => $questionid));
