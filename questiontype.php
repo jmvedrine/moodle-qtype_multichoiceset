@@ -390,7 +390,11 @@ class qtype_multichoiceset extends question_type {
             $ans = $format->import_answer($answer, true,
                     $format->get_format($question->questiontextformat));
             $question->answer[] = $ans->answer;
-            $question->correctanswer[] = !empty($ans->fraction);
+
+            // FIX: Some tools set fraction to `0.0` 
+            // which leeds to false `true` answers.
+            $question->correctanswer[] = !empty($ans->fraction) && 
+                                         (float)$ans->fraction > 0;
             $question->feedback[] = $ans->feedback;
 
             // Backwards compatibility.
