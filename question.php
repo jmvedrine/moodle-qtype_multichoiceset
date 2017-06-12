@@ -36,17 +36,42 @@ require_once($CFG->dirroot . '/question/type/multichoice/question.php');
  */
 class qtype_multichoiceset_question extends qtype_multichoice_multi_question {
 
+    /**
+     * @author Philipp Steingrebe <psteingrebe@vds.de>
+     *
+     * @param  array  $response
+     *    The question response
+     *
+     * @return array
+     *    The value fraction and the state
+     */
+    
     public function grade_response(array $response) {
-        $fraction = 0;
-        list($numright, $total) = $this->get_num_parts_right($response);
-        $numwrong = $this->get_num_selected_choices($response) - $numright;
-        $numcorrect = $this->get_num_correct_choices();
-		if ($numwrong == 0 && $numcorrect == $numright) {
-		    $fraction = 1;
-		}
+        // Get number of right answers and total answer possibilities
+        list($numRight, $numTotal) = $this->get_num_parts_right($response);
+        
+        // Get number of wrong answers, which is the difference between
+        // number of given ansers and number of right answers
+        $numWrong   = $this->get_num_selected_choices($response) - $numRight;
+        
+        // Get number of correct answer possibilities
+        $numCorrect = $this->get_num_correct_choices();
 
+        switch (true) {
+            // No wrong and all correct answers selected -> full points
+            case $numwrong == 0 && $numcorrect == $numright:
+                $fraction = 1;
+                break;
+            // No wrong but not all correct answers selected -> half points
+            case $numwrong == 0 && $numcorrect > 0:
+                $fraction = 0.5;
+                break;
+            // Otherwise -> zero points
+            default:
+                $fraction = 0;
+        }
+        
         $state = question_state::graded_state_for_fraction($fraction);
-
         return array($fraction, $state);
     }
 
