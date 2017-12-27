@@ -63,7 +63,7 @@ class qtype_multichoiceset_walkthrough_test extends qbehaviour_walkthrough_test_
                 new question_pattern_expectation('/class="r0 correct"/'),
                 new question_pattern_expectation('/class="r1"/'));
     }
-    
+
     public function test_deferredfeedback_resume_multichoiceset_right_right() {
 
         // Create a multichoiceset question.
