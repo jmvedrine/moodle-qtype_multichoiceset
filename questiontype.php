@@ -273,8 +273,8 @@ class qtype_multichoiceset extends question_type {
         $parts = array();
 
         foreach ($questiondata->options->answers as $aid => $answer) {
-            $parts[$aid] = array($aid =>
-                    new question_possible_response(html_to_text(format_text(
+            $parts[$aid] = array($aid => new question_possible_response(
+                            html_to_text(format_text(
                     $answer->answer, $answer->answerformat, array('noclean' => true)),
                     0, false), $answer->fraction));
         }
@@ -291,8 +291,8 @@ class qtype_multichoiceset extends question_type {
     public static function get_numbering_styles() {
         $styles = array();
         foreach (array('abc', 'ABCD', '123', 'iii', 'IIII', 'none') as $numberingoption) {
-            $styles[$numberingoption] =
-                    get_string('answernumbering' . $numberingoption, 'qtype_multichoice');
+            $styles[$numberingoption]
+                    = get_string('answernumbering' . $numberingoption, 'qtype_multichoice');
         }
         return $styles;
     }

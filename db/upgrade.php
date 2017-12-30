@@ -213,7 +213,8 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
     if ($oldversion < 2015040100) {
 
         // Fix wrong component for combined feedback files.
-        $params = array('component' => 'qtype_multichoiceset', 'filearea1' => 'correctfeedback', 'filearea2' => 'incorrectfeedback');
+        $params = array('component' => 'qtype_multichoiceset'
+                , 'filearea1' => 'correctfeedback', 'filearea2' => 'incorrectfeedback');
         $sql = "component = :component AND (filearea = :filearea1 OR filearea = :filearea2)";
         $DB->set_field_select('files', 'component', 'question', $sql, $params);
 
