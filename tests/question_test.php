@@ -43,7 +43,7 @@ class qtype_multichoiceset_question_test extends advanced_testcase {
     protected function get_test_multichoiceset_question($which = null) {
         return test_question_maker::make_question('multichoiceset', $which);
     }
-    
+
     public function test_get_expected_data() {
         $question = $this->get_test_multichoiceset_question('two_of_four');
         $question->start_attempt(new question_attempt_step(), 1);

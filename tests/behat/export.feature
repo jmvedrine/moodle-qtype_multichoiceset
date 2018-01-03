@@ -1,4 +1,4 @@
-@qtype @qtype_multichoice
+@qtype @qtype_multichoiceset
 Feature: Test exporting All-or-Nothing Multiple Choice questions
   As a teacher
   In order to be able to reuse my All-or-Nothing Multiple Choice questions
@@ -20,7 +20,6 @@ Feature: Test exporting All-or-Nothing Multiple Choice questions
     And the following "questions" exist:
       | questioncategory | qtype           | name             | template    |
       | Test questions   | multichoiceset  | Multi-choice-001 | two_of_four |
-      | Test questions   | multichoiceset  | Multi-choice-002 | one_of_four |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
 
@@ -28,7 +27,7 @@ Feature: Test exporting All-or-Nothing Multiple Choice questions
     When I navigate to "Export" node in "Course administration > Question bank"
     And I set the field "id_format_xml" to "1"
     And I press "Export questions to file"
-    Then following "click here" should download between "3700" and "3800" bytes
+    Then following "click here" should download between "1200" and "1300" bytes
     # If the download step is the last in the scenario then we can sometimes run
     # into the situation where the download page causes a http redirect but behat
     # has already conducted its reset (generating an error). By putting a logout

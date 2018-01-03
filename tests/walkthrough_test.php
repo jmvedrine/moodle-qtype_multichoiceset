@@ -67,7 +67,7 @@ class qtype_multichoiceset_walkthrough_test extends qbehaviour_walkthrough_test_
     public function test_deferredfeedback_resume_multichoiceset_right_right() {
 
         // Create a multichoiceset question.
-        $mc = qtype_multichoiceset_test_helper::make_a_multichoiceset_question();
+        $mc = qtype_multichoiceset_test_helper::make_multichoiceset_question_two_of_four();
         $mc->shuffleanswers = false;
 
         $this->start_attempt_at_question($mc, 'deferredfeedback', 2);

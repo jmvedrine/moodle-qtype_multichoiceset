@@ -87,12 +87,12 @@ class qtype_multichoiceset_test_helper {
         $qdata->options->shuffleanswers = 1;
         $qdata->options->answernumbering = '123';
         $qdata->options->layout = 0;
-        $qdata->options->correctfeedback =
-                test_question_maker::STANDARD_OVERALL_CORRECT_FEEDBACK;
+        $qdata->options->correctfeedback
+                = test_question_maker::STANDARD_OVERALL_CORRECT_FEEDBACK;
         $qdata->options->correctfeedbackformat = FORMAT_HTML;
         $qdata->options->shownumcorrect = 1;
-        $qdata->options->incorrectfeedback =
-                test_question_maker::STANDARD_OVERALL_INCORRECT_FEEDBACK;
+        $qdata->options->incorrectfeedback
+                = test_question_maker::STANDARD_OVERALL_INCORRECT_FEEDBACK;
         $qdata->options->incorrectfeedbackformat = FORMAT_HTML;
 
         $qdata->options->answers = array(

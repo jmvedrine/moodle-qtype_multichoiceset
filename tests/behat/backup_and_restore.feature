@@ -29,7 +29,7 @@ Feature: Test duplicating a quiz containing a All-or-Nothing Multiple Choice que
     And I restore "test_backup.mbz" backup into a new course using this options:
       | Schema | Course name | Course 2 |
     And I navigate to "Question bank" node in "Course administration"
-    And I click on "Edit" "link" in the "Multi-choice-001" "table_row"
+    And I click on "Edit" "link" in the "All-or-nothing-001" "table_row"
     Then the following fields match these values:
       | Question name                      | All-or-nothing-001                 |
       | Question text                      | Which are the odd numbers?         |

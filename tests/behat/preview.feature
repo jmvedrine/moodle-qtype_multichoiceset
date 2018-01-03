@@ -1,7 +1,7 @@
 @qtype @qtype_multichoiceset
-Feature: Preview a Multiple choice question
+Feature: Preview a All-or-Nothing Multiple Choice question
   As a teacher
-  In order to check my Multiple choice questions will work for students
+  In order to check my All-or-Nothing Multiple Choice questions will work for students
   I need to preview them
 
   Background:
@@ -18,16 +18,15 @@ Feature: Preview a Multiple choice question
       | contextlevel | reference | name           |
       | Course       | C1        | Test questions |
     And the following "questions" exist:
-      | questioncategory | qtype       | name             | template    |
-      | Test questions   | multichoiceset | Multi-choice-001 | two_of_four |
-      | Test questions   | multichoiceset | Multi-choice-002 | one_of_four |
+      | questioncategory | qtype       | name                  | template    |
+      | Test questions   | multichoiceset | All-or-nothing-001 | two_of_four |
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I navigate to "Question bank" node in "Course administration"
 
   @javascript @_switch_window
-  Scenario: Preview a Multiple choice question and submit a partially correct response.
-    When I click on "Preview" "link" in the "Multi-choice-001" "table_row"
+  Scenario: Preview a Multiple choice question and submit a wrong response.
+    When I click on "Preview" "link" in the All-or-nothing-001" "table_row"
     And I switch to "questionpreview" window
     And I set the field "How questions behave" to "Immediate feedback"
     And I press "Start again with these options"
@@ -36,13 +35,12 @@ Feature: Preview a Multiple choice question
     And I press "Check"
     Then I should see "One is odd"
     And I should see "Two is even"
-    And I should see "Mark 0.50 out of 1.00"
-    And I should see "Parts, but only parts, of your response are correct."
+    And I should see "Mark 0.00 out of 1.00"
     And I switch to the main window
 
   @javascript @_switch_window
   Scenario: Preview a Multiple choice question and submit a correct response.
-    When I click on "Preview" "link" in the "Multi-choice-001" "table_row"
+    When I click on "Preview" "link" in the "All-or-nothing-001" "table_row"
     And I switch to "questionpreview" window
     And I set the field "How questions behave" to "Immediate feedback"
     And I press "Start again with these options"
@@ -57,16 +55,3 @@ Feature: Preview a Multiple choice question
     And I should see "The correct answers are: One, Three"
     And I switch to the main window
 
-  @javascript @_switch_window
-  Scenario: Preview a Multiple choice question and submit a correct response.
-    When I click on "Preview" "link" in the "Multi-choice-002" "table_row"
-    And I switch to "questionpreview" window
-    And I set the field "How questions behave" to "Immediate feedback"
-    And I press "Start again with these options"
-    And I click on "One" "radio"
-    And I press "Check"
-    Then I should see "The oddest number is One."
-    And I should see "Mark 1.00 out of 1.00"
-    And I should see "Well done!"
-    And I should see "The correct answer is: One"
-    And I switch to the main window
