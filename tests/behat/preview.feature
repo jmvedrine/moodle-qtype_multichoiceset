@@ -26,7 +26,7 @@ Feature: Preview a All-or-Nothing Multiple Choice question
 
   @javascript @_switch_window
   Scenario: Preview a Multiple choice question and submit a wrong response.
-    When I click on "Preview" "link" in the All-or-nothing-001" "table_row"
+    When I click on "Preview" "link" in the "All-or-nothing-001" "table_row"
     And I switch to "questionpreview" window
     And I set the field "How questions behave" to "Immediate feedback"
     And I press "Start again with these options"
