@@ -28,11 +28,11 @@ Feature: Test creating a All-or-Nothing Multiple Choice question
       | Choice 3                 | London                             |
       | Choice 4                 | Barcelona                          |
       | Choice 5                 | Paris                              |
-      | id_correctanswer_0            | 0                             |
-      | id_correctanswer_1            | 0                             |
-      | id_correctanswer_2            | 1                             |
-      | id_correctanswer_3            | 0                             |
-      | id_correctanswer_4            | 1                             |
+      | id_correctanswer_0       | 0                                  |
+      | id_correctanswer_1       | 0                                  |
+      | id_correctanswer_2       | 1                                  |
+      | id_correctanswer_3       | 0                                  |
+      | id_correctanswer_4       | 1                                  |
       | Hint 1                   | First hint                         |
       | Hint 2                   | Second hint                        |
     Then I should see "All-or-nothing-001"

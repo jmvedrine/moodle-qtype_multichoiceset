@@ -21,7 +21,7 @@ Feature: Test importing All-or-Nothing Multiple Choice questions
   Scenario: import All-or-Nothing Multiple Choice question.
     When I navigate to "Import" node in "Course administration > Question bank"
     And I set the field "id_format_xml" to "1"
-    And I upload "question/type/multichoiceset/tests/fixtures/testquestion.moodle.xml" file to "Import" filemanager
+    And I upload "question/type/multichoiceset/tests/fixtures/qtype_sample_multichoiceset.xml" file to "Import" filemanager
     And I press "id_submitbutton"
     Then I should see "Parsing questions from import file."
     And I should see "Importing 1 questions from file"
