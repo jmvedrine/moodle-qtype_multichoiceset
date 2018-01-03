@@ -18,7 +18,7 @@ Feature: Preview a All-or-Nothing Multiple Choice question
       | contextlevel | reference | name           |
       | Course       | C1        | Test questions |
     And the following "questions" exist:
-      | questioncategory | qtype       | name                  | template    |
+      | questioncategory | qtype          | name               | template    |
       | Test questions   | multichoiceset | All-or-nothing-001 | two_of_four |
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage

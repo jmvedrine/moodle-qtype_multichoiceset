@@ -121,7 +121,7 @@ class qtype_multichoiceset_question_test extends advanced_testcase {
         $summary = $mc->summarise_response(array('choice1' => 1, 'choice2' => 1),
                 test_question_maker::get_a_qa($mc));
 
-        $this->assertEquals('One; Three', $summary);
+        $this->assertEquals('Two; Three', $summary);
     }
 
     public function test_classify_response() {

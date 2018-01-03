@@ -35,7 +35,6 @@ Feature: Test duplicating a quiz containing a All-or-Nothing Multiple Choice que
       | Question text                      | Which are the odd numbers?         |
       | General feedback                   | The odd numbers are One and Three. |
       | Default mark                       | 1                                  |
-      | One or multiple answers?           | Multiple answers allowed           |
       | Shuffle the choices?               | 1                                  |
       | Choice 1                           | One                                |
       | Choice 2                           | Two                                |
