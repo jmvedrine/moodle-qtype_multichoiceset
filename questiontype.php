@@ -450,19 +450,48 @@ class qtype_multichoiceset extends question_type {
     }
 
     /**
-     * Support import/export for wordtable format and export for htmltable format
-     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
-     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
+     * Support export to wordtable and htmltable format plugins
+     *
      * Just call the corresponding XML functions
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
+     *
+     * @param question object the question object
+     * @param format object the format object so that helper methods can be used
+     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @return string the data to append to the output buffer or false if error
      */
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
     public function export_to_wordtable($question, qformat_xml $format, $extra=null) {
         return $this->export_to_xml($question, $format, $extra);
     }
 
+    /**
+     * Support import from wordtable format plugin
+     *
+     * Just call the corresponding XML function
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
+     *
+     * @param data mixed the segment of data containing the question
+     * @param question object question object processed (so far) by standard import code
+     * @param format object the format object so that helper methods can be used (in particular error())
+     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @return object question object suitable for save_options() call or false if cannot handle
+     */
     public function import_from_wordtable($data, $question, qformat_xml $format, $extra=null) {
         return $this->import_from_xml($data, $question, $format, $extra);
     }
 
+    /**
+     * Support export to htmltable format plugin
+     *
+     * Just call the corresponding XML functions
+     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
+     *
+     * @param question object the question object
+     * @param format object the format object so that helper methods can be used
+     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @return string the data to append to the output buffer or false if error
+     */
     public function export_to_htmltable($question, qformat_xml $format, $extra=null) {
         return $this->export_to_xml($question, $format, $extra);
     }
@@ -503,6 +532,11 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
                 $row->shownumcorrect, $row->clearwrong, !empty($row->options));
     }
 
+    /**
+     * Create a basic hint from a row loaded from the question_hints table in the database.
+     * @param stdClass $options display options
+     * @return void
+     */
     public function adjust_display_options(question_display_options $options) {
         parent::adjust_display_options($options);
         $options->suppresschoicefeedback = !$this->showchoicefeedback;
