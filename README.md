@@ -2,7 +2,7 @@ All or Nothing Question type
 ----------------------------
 
 This is a multiple-choice, multiple-response question type that was created by
-Adriane Boyd (adrianeboyd@gmail.com), later maintained by Jean-Michel Vedrine (vedrine@vedrine@vedrine.net)
+Adriane Boyd (adrianeboyd@gmail.com), later maintained by Jean-Michel Vedrine (vedrine@vedrine.net)
 and is now maintained by Eoin Campbell.
 
 This version can be used with Moodle 3.0 to 3.4 versions.
