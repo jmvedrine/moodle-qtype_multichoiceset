@@ -68,6 +68,16 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         $this->add_interactive_settings(true, true);
     }
 
+    /**
+     * Get the list of form elements to repeat, one for each answer.
+     * @param object $mform the form being built.
+     * @param $label the label to use for each option.
+     * @param $gradeoptions the possible grades for each answer.
+     * @param $repeatedoptions reference to array of repeated options to fill
+     * @param $answersoption reference to return the name of $question->options
+     *      field holding an array of answers
+     * @return array of form fields.
+     */
     protected function get_per_answer_fields($mform, $label, $gradeoptions,
             &$repeatedoptions, &$answersoption) {
         $repeated = array();
@@ -85,6 +95,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         return $repeated;
     }
 
+    /**
+     * Create the form elements required by one hint.
+     * @param string $withclearwrong whether this quesiton type uses the 'Clear wrong' option on hints.
+     * @param string $withshownumpartscorrect whether this quesiton type uses the 'Show num parts correct' option on hints.
+     * @return array form field elements for one hint.
+     */
     protected function get_hint_fields($withclearwrong = false, $withshownumpartscorrect = false) {
         list($repeated, $repeatedoptions) = parent::get_hint_fields(
                 $withclearwrong, $withshownumpartscorrect);
@@ -93,6 +109,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         return array($repeated, $repeatedoptions);
     }
 
+    /**
+     * Perform any preprocessing needed on the data passed to {@link set_data()}
+     * before it is used to initialise the form.
+     * @param object $question the data being passed to the form.
+     * @return object $question the modified data.
+     */
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_answers($question, true);
@@ -144,6 +166,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         return $question;
     }
 
+    /**
+     * Perform any validation needed
+     * @param object $data the data being returned by the form.
+     * @param array $files any files being returned by the form.
+     * @return array any errors in the form
+     */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
@@ -178,6 +206,10 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         return $errors;
     }
 
+    /**
+     * Return the question type name.
+     * @return string the question type name
+     */
     public function qtype() {
         return 'multichoiceset';
     }

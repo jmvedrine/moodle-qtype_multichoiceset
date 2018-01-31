@@ -28,7 +28,19 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Checks file access for multiple choice all or nothing questions.
+ * Checks file access for All or Nothing multiple choice questions.
+ *
+ * Extract the WordProcessingML XML files from the .docx file, and use a sequence of XSLT
+ * steps to convert it into Moodle Question XML
+ *
+ * @param stdClass $course course settings object
+ * @param object $cm the course module object representing the activity
+ * @param stdClass $context context object
+ * @param string $filearea the name of the file area.
+ * @param array $args the remaining bits of the file path.
+ * @param bool $forcedownload whether the user must be forced to download the file.
+ * @param array $options additional options affecting the file serving
+ * @return bool Success
  */
 function qtype_multichoiceset_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $CFG;

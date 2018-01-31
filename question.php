@@ -35,6 +35,15 @@ require_once($CFG->dirroot . '/question/type/multichoice/question.php');
  */
 class qtype_multichoiceset_question extends qtype_multichoice_multi_question {
 
+    /**
+     * Get the grade
+     *
+     * Calculate the grade based on the users response
+     *
+     * @param array $response responses, as returned by
+     *      {@link question_attempt_step::get_qt_data()}.
+     * @return array fraction and state
+     */
     public function grade_response(array $response) {
         $fraction = 0;
         list($numright, $total) = $this->get_num_parts_right($response);
@@ -49,6 +58,13 @@ class qtype_multichoiceset_question extends qtype_multichoice_multi_question {
         return array($fraction, $state);
     }
 
+    /**
+     * Disable hint settings if too many choices selected
+     *
+     * Disable those hint settings that we don't want when the student has selected
+     * more choices than the number of right choices. This avoids giving the game away.
+     * @param question_hint_with_parts $hint a hint.
+     */
     protected function disable_hint_settings_when_too_many_selected(
             question_hint_with_parts $hint) {
         parent::disable_hint_settings_when_too_many_selected($hint);
