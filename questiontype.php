@@ -460,7 +460,6 @@ class qtype_multichoiceset extends question_type {
      * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
-     * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
     public function export_to_wordtable($question, qformat_xml $format, $extra=null) {
         return $this->export_to_xml($question, $format, $extra);
     }
