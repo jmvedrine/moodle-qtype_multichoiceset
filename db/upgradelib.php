@@ -36,11 +36,23 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_updater {
     protected $order;
 
+    /**
+     * Return if the answer is blank (no responses selected)
+     *
+     * @param stdObject $state the question state
+     * @return boolean
+     */
     public function is_blank_answer($state) {
         // Blank multichoiceset answers are not empty strings, they rather end in a colon.
         return empty($state->answer) || substr($state->answer, -1) == ':';
     }
 
+    /**
+     * Return the right answer
+     *
+     * @param array $data the question data
+     * @return string
+     */
     public function right_answer() {
         $rightbits = array();
         foreach ($this->question->options->answers as $ans) {
@@ -51,6 +63,12 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
         return implode('; ', $rightbits);
     }
 
+    /**
+     * Expand the answer response
+     *
+     * @param string $answer
+     * @return string
+     */
     protected function explode_answer($answer) {
         if (strpos($answer, ':') !== false) {
             list($order, $responses) = explode(':', $answer);
@@ -64,6 +82,12 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
         }
     }
 
+    /**
+     * Set the data elements for the question step
+     *
+     * @param stdObject $state the question state
+     * @return array question response summary
+     */
     public function response_summary($state) {
         $responses = $this->explode_answer($state->answer);
         if (!empty($responses)) {
@@ -86,11 +110,23 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
         }
     }
 
+    /**
+     * Test if the question response was selected
+     *
+     * @param stdObject $state the question state
+     * @return boolean
+     */
     public function was_answered($state) {
         $responses = $this->explode_answer($state->answer);
         return !empty($responses);
     }
 
+    /**
+     * Set the data elements for the first question step
+     *
+     * @param stdObject $state the question state
+     * @param array $data the question data
+     */
     public function set_first_step_data_elements($state, &$data) {
         if (!$state->answer) {
             return;
@@ -100,10 +136,21 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
         $this->order = explode(',', $order);
     }
 
+    /**
+     * Supply any missing first step data
+     *
+     * @param array $data the question data
+     */
     public function supply_missing_first_step_data(&$data) {
         $data['_order'] = implode(',', array_keys($this->question->options->answers));
     }
 
+    /**
+     * Set the data elements for the question step
+     *
+     * @param stdObject $state the question state
+     * @param array $data the question data
+     */
     public function set_data_elements_for_step($state, &$data) {
         $responses = $this->explode_answer($state->answer);
         $responses = explode(',', $responses);

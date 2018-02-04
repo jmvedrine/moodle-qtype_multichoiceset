@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Backup handler for Moodle 1.x Multichoiceset questions
+ *
  * @package    qtype_multichoiceset
  * @copyright  2011 David Mudrak <david@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,10 +26,15 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * multichoiceset question type conversion handler
+ *
+ * @copyright  2011 David Mudrak <david@moodle.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class moodle1_qtype_multichoiceset_handler extends moodle1_qtype_handler {
 
     /**
+     * Return the subpaths within a question
+     *
      * @return array
      */
     public function get_question_subpaths() {
@@ -68,7 +75,7 @@ class moodle1_qtype_multichoiceset_handler extends moodle1_qtype_handler {
      * Converts the multichoiceset info and writes it into the question.xml
      *
      * @param array $multichoicesets the grouped structure
-     * @param int $oldquestiontextformat - {@see moodle1_question_bank_handler::process_question()}
+     * @param int $oldquestiontextformat - (see moodle1_question_bank_handler::process_question())
      */
     protected function write_multichoiceset(array $multichoicesets, $oldquestiontextformat) {
         global $CFG;

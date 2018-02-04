@@ -24,6 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Converts the multichoiceset info and writes it into the question.xml
+ *
+ * @param int $oldversion the old (i.e. current) version of Moodle
+ */
 function xmldb_qtype_multichoiceset_upgrade($oldversion) {
     global $CFG, $DB;
 

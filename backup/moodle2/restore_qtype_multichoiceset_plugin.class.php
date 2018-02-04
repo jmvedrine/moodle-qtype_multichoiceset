@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Restore handler for Moodle 2.x/3.x Multichoiceset questions
+ *
  * @package    qtype_multichoiceset
  * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -54,6 +56,9 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
 
     /**
      * Process the qtype/multichoiceset element
+     *
+     * @param stdObject $data question data
+     * @return void
      */
     public function process_multichoiceset($data) {
         global $DB;
@@ -90,6 +95,7 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
 
     /**
      * Recode the choice order as stored in the response.
+     *
      * @param string $order the original order.
      * @return string the recoded order.
      */
@@ -110,6 +116,9 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
      * answer are two (hypen speparated) lists of comma separated question_answers
      * the first to specify the order of the answers and the second to specify the
      * responses. Note the order list (the first one) can be optional
+     *
+     * @param stdObject $state the question states record
+     * @return string the question answers
      */
     public function recode_legacy_state_answer($state) {
         $answer = $state->answer;
