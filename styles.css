@@ -19,6 +19,13 @@
     text-indent: 0;
 }
 
+.que.multichoiceset .answer div.r0 .icon.fa-check,
+.que.multichoiceset .answer div.r1 .icon.fa-check,
+.que.multichoiceset .answer div.r0 .icon.fa-remove,
+.que.multichoiceset .answer div.r1 .icon.fa-remove {
+    text-indent: 0;
+}
+
 .que.multichoiceset .answer div.r0 input,
 .que.multichoiceset .answer div.r1 input {
     margin: 0 5px;
