@@ -25,13 +25,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2018013100;
+$plugin->version   = 2018020500;
 
 $plugin->requires  = 2015111600;
 
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.6 for Moodle 3.0 up to 3.5';
+$plugin->release   = '1.6.1 for Moodle 3.0 up to 3.5';
 
 $plugin->dependencies = array(
     'qtype_multichoice' => ANY_VERSION,
