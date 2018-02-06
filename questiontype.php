@@ -40,6 +40,12 @@ class qtype_multichoiceset extends question_type {
         return true;
     }
 
+    /**
+     * Get the question options.
+     *
+     * @param stdObject $question the question
+     * @return void
+     */
     public function get_question_options($question) {
         global $DB, $OUTPUT;
         $question->options = $DB->get_record('qtype_multichoiceset_options',
@@ -47,6 +53,12 @@ class qtype_multichoiceset extends question_type {
         parent::get_question_options($question);
     }
 
+    /**
+     * Save the question options.
+     *
+     * @param stdObject $question the question
+     * @return stdObject error if there aren't at least 2 answers
+     */
     public function save_question_options($question) {
         global $DB;
         $context = $question->context;
@@ -136,6 +148,13 @@ class qtype_multichoiceset extends question_type {
         $this->save_hints($question, true);
     }
 
+    /**
+     * Save all hints.
+     *
+     * @param stdObject $formdata form data of question
+     * @param boolean $withparts whether the question has parts
+     * @return stdObject
+     */
     public function save_hints($formdata, $withparts = false) {
         global $DB;
         $context = $formdata->context;
@@ -215,16 +234,35 @@ class qtype_multichoiceset extends question_type {
         }
     }
 
+    /**
+     * Make a hint object.
+     *
+     * @param stdObject $hint a hint
+     * @return stdObject
+     */
     protected function make_hint($hint) {
         return qtype_multichoiceset_hint::load_from_record($hint);
     }
 
+    /**
+     * Make a question instance.
+     *
+     * @param stdObject $questiondata the question data
+     * @return stdObject
+     */
     protected function make_question_instance($questiondata) {
         question_bank::load_question_definition_classes($this->name());
         $class = 'qtype_multichoiceset_question';
         return new $class();
     }
 
+    /**
+     * Initialise the question instance.
+     *
+     * @param stdObject $question the question
+     * @param stdObject $questiondata the question data
+     * @return void
+     */
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $question->shuffleanswers = $questiondata->options->shuffleanswers;
@@ -243,17 +281,36 @@ class qtype_multichoiceset extends question_type {
         $this->initialise_question_answers($question, $questiondata, false);
     }
 
+    /**
+     * Make an answer.
+     *
+     * @param stdObject $answer the answer
+     * @return stdObject
+     */
     public function make_answer($answer) {
         // Overridden just so we can make it public for use by question.php.
         return parent::make_answer($answer);
     }
 
+    /**
+     * Delete the question.
+     *
+     * @param int $questionid the question ID
+     * @param stdObject $contextid the context ID
+     * @return stdObject
+     */
     public function delete_question($questionid, $contextid) {
         global $DB;
         $DB->delete_records('qtype_multichoiceset_options', array('questionid' => $questionid));
         return parent::delete_question($questionid, $contextid);
     }
 
+    /**
+     * Get the number of correct response choices.
+     *
+     * @param stdObject $questiondata the question data
+     * @return int
+     */
     protected function get_num_correct_choices($questiondata) {
         $numright = 0;
         foreach ($questiondata->options->answers as $answer) {
@@ -264,11 +321,23 @@ class qtype_multichoiceset extends question_type {
         return $numright;
     }
 
+    /**
+     * Get the score if random response chosen - but not computed for this question type.
+     *
+     * @param stdObject $questiondata the question data
+     * @return stdObject
+     */
     public function get_random_guess_score($questiondata) {
         // Pretty much impossible to compute for _multi questions. Don't try.
         return null;
     }
 
+    /**
+     * Get the possible responses to the question.
+     *
+     * @param stdObject $questiondata the question data
+     * @return array array of question parts
+     */
     public function get_possible_responses($questiondata) {
         $parts = array();
 
@@ -283,6 +352,8 @@ class qtype_multichoiceset extends question_type {
     }
 
     /**
+     * Get the available question numbering styles.
+     *
      * @return array of the numbering styles supported. For each one, there
      *      should be a lang string answernumberingxxx in teh qtype_multichoice
      *      language file, and a case in the switch statement in number_in_style,
@@ -297,6 +368,14 @@ class qtype_multichoiceset extends question_type {
         return $styles;
     }
 
+    /**
+     * Move files from old to new context.
+     *
+     * @param int $questionid the question ID
+     * @param stdObject $oldcontextid the source context ID
+     * @param stdObject $newcontextid the destination context ID
+     * @return void
+     */
     public function move_files($questionid, $oldcontextid, $newcontextid) {
         $fs = get_file_storage();
 
@@ -309,6 +388,13 @@ class qtype_multichoiceset extends question_type {
                 $newcontextid, 'question', 'incorrectfeedback', $questionid);
     }
 
+    /**
+     * Delete any files in the context.
+     *
+     * @param int $questionid the question ID
+     * @param stdObject $contextid the context ID
+     * @return void
+     */
     protected function delete_files($questionid, $contextid) {
         $fs = get_file_storage();
 
@@ -322,10 +408,11 @@ class qtype_multichoiceset extends question_type {
     // IMPORT EXPORT FUNCTIONS.
 
     /**
-     * Provide export functionality for xml format
-     * @param question object the question object
-     * @param format object the format object so that helper methods can be used
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * Provide export functionality for xml format.
+     *
+     * @param stdObject $question the question object
+     * @param stdObject $format the format object so that helper methods can be used
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
     public function export_to_xml($question, qformat_xml $format, $extra=null) {
@@ -359,11 +446,12 @@ class qtype_multichoiceset extends question_type {
 
     /**
      * Provide import functionality for xml format
-     * @param data mixed the segment of data containing the question
-     * @param question object question object processed (so far) by standard import code
-     * @param format object the format object so that helper methods can be used (in particular error())
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
-     * @return object question object suitable for save_options() call or false if cannot handle
+     *
+     * @param mixed $data the segment of data containing the question
+     * @param stdObject $question question object processed (so far) by standard import code
+     * @param stdObject $format the format object so that helper methods can be used (in particular error())
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
+     * @return stdObject question object suitable for save_options() call or false if cannot handle
      */
     public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
         // Check question is for us.
@@ -455,9 +543,9 @@ class qtype_multichoiceset extends question_type {
      * Just call the corresponding XML functions
      * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
      *
-     * @param question object the question object
-     * @param format object the format object so that helper methods can be used
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @param stdObject $question the question object
+     * @param stdObject $format the format object so that helper methods can be used
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
     public function export_to_wordtable($question, qformat_xml $format, $extra=null) {
@@ -470,11 +558,11 @@ class qtype_multichoiceset extends question_type {
      * Just call the corresponding XML function
      * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
      *
-     * @param data mixed the segment of data containing the question
-     * @param question object question object processed (so far) by standard import code
-     * @param format object the format object so that helper methods can be used (in particular error())
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
-     * @return object question object suitable for save_options() call or false if cannot handle
+     * @param mixed $data the segment of data containing the question
+     * @param stdObject $question question object processed (so far) by standard import code
+     * @param stdObject $format the format object so that helper methods can be used (in particular error())
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
+     * @return stdObject question object suitable for save_options() call or false if cannot handle
      */
     public function import_from_wordtable($data, $question, qformat_xml $format, $extra=null) {
         return $this->import_from_xml($data, $question, $format, $extra);
@@ -486,9 +574,9 @@ class qtype_multichoiceset extends question_type {
      * Just call the corresponding XML functions
      * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
      *
-     * @param question object the question object
-     * @param format object the format object so that helper methods can be used
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
+     * @param stdObject $question the question object
+     * @param stdObject $format the format object so that helper methods can be used
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
     public function export_to_htmltable($question, qformat_xml $format, $extra=null) {
@@ -498,8 +586,9 @@ class qtype_multichoiceset extends question_type {
 }
 
 /**
- * An extension of {@link question_hint_with_parts} for multichoiceset questions
- * with an extra option for whether to show the feedback for each choice.
+ * An extension of {@link question_hint_with_parts} for multichoiceset questions.
+ *
+ * This has an extra option for whether to show the feedback for each choice.
  *
  * @copyright  2010 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -510,7 +599,10 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
 
     /**
      * Constructor.
+     *
+     * @param int $id Question ID
      * @param string $hint The hint text
+     * @param int $hintformat
      * @param bool $shownumcorrect whether the number of right parts should be shown
      * @param bool $clearwrong whether the wrong parts should be reset.
      * @param bool $showchoicefeedback whether to show the feedback for each choice.
@@ -523,6 +615,7 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
 
     /**
      * Create a basic hint from a row loaded from the question_hints table in the database.
+     *
      * @param object $row with $row->hint, ->shownumcorrect and ->clearwrong set.
      * @return question_hint_with_parts
      */
@@ -532,7 +625,8 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
     }
 
     /**
-     * Create a basic hint from a row loaded from the question_hints table in the database.
+     * Adjust the display options
+     *
      * @param stdClass $options display options
      * @return void
      */

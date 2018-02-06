@@ -70,11 +70,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
 
     /**
      * Get the list of form elements to repeat, one for each answer.
+     *
      * @param object $mform the form being built.
-     * @param $label the label to use for each option.
-     * @param $gradeoptions the possible grades for each answer.
-     * @param $repeatedoptions reference to array of repeated options to fill
-     * @param $answersoption reference to return the name of $question->options
+     * @param string $label the label to use for each option.
+     * @param array $gradeoptions the possible grades for each answer.
+     * @param array $repeatedoptions reference to array of repeated options to fill
+     * @param string $answersoption reference to return the name of $question->options
      *      field holding an array of answers
      * @return array of form fields.
      */

@@ -38,6 +38,9 @@ require_once($CFG->dirroot . '/question/type/multichoiceset/tests/helper.php');
  */
 class qtype_multichoiceset_question_test extends advanced_testcase {
     /**
+     * Get a test question.
+     *
+     * @param stdObject $which
      * @return qtype_multichoiceset_question the requested question object.
      */
     protected function get_test_multichoiceset_question($which = null) {

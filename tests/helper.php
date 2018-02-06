@@ -33,12 +33,18 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset_test_helper {
+    /**
+     * Get dummy test questions.
+     *
+     * @return array
+     */
     public function get_test_questions() {
         return array('two_of_four');
     }
 
     /**
      * Makes a multichoiceset question with 2 correct answers.
+     *
      * @return qtype_miltichoiceset_question
      */
     public function make_multichoiceset_question_two_of_four() {
@@ -63,6 +69,7 @@ class qtype_multichoiceset_test_helper {
 
     /**
      * Get the question data, as it would be loaded by get_question_options.
+     *
      * @return object
      */
     public static function get_multichoiceset_question_data_two_of_four() {
@@ -151,6 +158,7 @@ class qtype_multichoiceset_test_helper {
     }
     /**
      * Get the question data, as it would be loaded by get_question_options.
+     *
      * @return object
      */
     public static function get_multichoiceset_question_form_data_two_of_four() {

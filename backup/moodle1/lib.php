@@ -46,6 +46,9 @@ class moodle1_qtype_multichoiceset_handler extends moodle1_qtype_handler {
 
     /**
      * Appends the multichoiceset specific information to the question
+     *
+     * @param array $data the question data
+     * @param array $raw unused
      */
     public function process_question(array $data, array $raw) {
 
@@ -72,7 +75,7 @@ class moodle1_qtype_multichoiceset_handler extends moodle1_qtype_handler {
     }
 
     /**
-     * Converts the multichoiceset info and writes it into the question.xml
+     * Converts the multichoiceset info and writes it into question XML
      *
      * @param array $multichoicesets the grouped structure
      * @param int $oldqtextformat - (see moodle1_question_bank_handler::process_question())

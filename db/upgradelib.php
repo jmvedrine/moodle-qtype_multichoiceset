@@ -25,8 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class for converting attempt data for multichoiceset questions when upgrading
- * attempts to the new question engine.
+ * Class to convert multichoiceset question attempt data when upgrading to the new question engine.
  *
  * This class is used by the code in question/engine/upgrade/upgradelib.php.
  *
@@ -34,6 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_updater {
+    /** @var array variable name => value */
     protected $order;
 
     /**
@@ -50,7 +50,6 @@ class qtype_multichoiceset_qe2_attempt_updater extends question_qtype_attempt_up
     /**
      * Return the right answer
      *
-     * @param array $data the question data
      * @return string
      */
     public function right_answer() {

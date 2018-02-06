@@ -27,8 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * restore plugin class that provides the necessary information
- * needed to restore one multichoiceset qtype plugin
+ * Restore plugin class that provides the information needed to restore one multichoiceset qtype
  *
  * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -86,6 +85,13 @@ class restore_qtype_multichoiceset_plugin extends restore_qtype_plugin {
         }
     }
 
+    /**
+     * Recode the response to the question
+     *
+     * @param int $questionid Question ID
+     * @param int $sequencenumber Sequence number of question (or attempt?)
+     * @param array $response re-ordered response
+     */
     public function recode_response($questionid, $sequencenumber, array $response) {
         if (array_key_exists('_order', $response)) {
             $response['_order'] = $this->recode_choice_order($response['_order']);

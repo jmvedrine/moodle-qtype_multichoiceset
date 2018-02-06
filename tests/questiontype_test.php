@@ -50,6 +50,11 @@ class qtype_multichoiceset_test extends advanced_testcase {
         $this->assertEquals($this->qtype->name(), 'multichoiceset');
     }
 
+    /**
+     * Get test question data.
+     *
+     * @return stdObject
+     */
     protected function get_test_question_data() {
         $q = new stdClass();
         $q->id = 1;
