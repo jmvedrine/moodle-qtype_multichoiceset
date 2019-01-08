@@ -45,7 +45,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         $mform->addElement('select', 'answernumbering',
                 get_string('answernumbering', 'qtype_multichoice'),
                 qtype_multichoice::get_numbering_styles());
-        $mform->setDefault('answernumbering', 'abc');
+        $mform->setDefault('answernumbering', get_config('qtype_multichoice', 'answernumbering'));
 
         $this->add_per_answer_fields($mform, get_string('choiceno', 'qtype_multichoice', '{no}'),
                 null, max(5, QUESTION_NUMANS_START));
@@ -98,8 +98,8 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
 
     /**
      * Create the form elements required by one hint.
-     * @param string $withclearwrong whether this quesiton type uses the 'Clear wrong' option on hints.
-     * @param string $withshownumpartscorrect whether this quesiton type uses the 'Show num parts correct' option on hints.
+     * @param bool $withclearwrong whether this question type uses the 'Clear wrong' option on hints.
+     * @param bool $withshownumpartscorrect whether this quesiton type uses the 'Show num parts correct' option on hints.
      * @return array form field elements for one hint.
      */
     protected function get_hint_fields($withclearwrong = false, $withshownumpartscorrect = false) {

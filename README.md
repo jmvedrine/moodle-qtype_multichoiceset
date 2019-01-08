@@ -5,7 +5,7 @@ This is a multiple-choice, multiple-response question type that was created by
 Adriane Boyd (adrianeboyd@gmail.com), later maintained by Jean-Michel Vedrine (vedrine@vedrine.net)
 and is now maintained by Eoin Campbell.
 
-This version can be used with Moodle 3.0 to 3.4 versions.
+This version can be used with Moodle 3.x versions.
 
 The official git repository of this question type is now https://github.com/ecampbell/moodle-qtype_multichoiceset
 
@@ -32,8 +32,7 @@ Install like any other plugin.
 
 #### Installation Using Git
 
-To install using git, type this command in the
-root of your Moodle install:
+To install using git, type this command in the root of your Moodle install:
 
     git clone git://github.com/ecampbell/moodle-qtype_multichoiceset.git question/type/multichoiceset
     echo '/question/type/multichoiceset' >> .git/info/exclude

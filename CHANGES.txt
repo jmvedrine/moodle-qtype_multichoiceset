@@ -2,5 +2,6 @@ Release notes
 -------------
 
 Date          Version   Comment
+2019/01/08    1.6.2     Fix handling of default numbering style
 2018/02/05    1.6.1     Fix presentation of answers in Boost theme, fix some PHPDocs warnings
 2018/01/31    1.6       Support Moodle mobile app
