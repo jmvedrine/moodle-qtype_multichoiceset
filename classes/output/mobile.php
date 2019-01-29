@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 class mobile {
 
-    public static function multichoiceset_view() {
+    public static function mobile_get_multichoiceset() {
         global $CFG;
         // General notes:
         // If you have worked on mobile activities, there is no cmid or courseid in $args here.
