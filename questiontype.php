@@ -36,6 +36,10 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset extends question_type {
+    /**
+     * @return whether the question_answers.answer field needs to have
+     * restore_decode_content_links_worker called on it.
+     */
     public function has_html_answers() {
         return true;
     }
@@ -259,7 +263,7 @@ class qtype_multichoiceset extends question_type {
     /**
      * Initialise the question instance.
      *
-     * @param stdObject $question the question
+     * @param question_definition $question the question_definition we are creating
      * @param stdObject $questiondata the question data
      * @return void
      */
@@ -344,8 +348,8 @@ class qtype_multichoiceset extends question_type {
         foreach ($questiondata->options->answers as $aid => $answer) {
             $parts[$aid] = array($aid => new question_possible_response(
                             html_to_text(format_text(
-                    $answer->answer, $answer->answerformat, array('noclean' => true)),
-                    0, false), $answer->fraction));
+                            $answer->answer, $answer->answerformat, array('noclean' => true)),
+                            0, false), $answer->fraction));
         }
 
         return $parts;
@@ -411,7 +415,7 @@ class qtype_multichoiceset extends question_type {
      * Provide export functionality for xml format.
      *
      * @param stdObject $question the question object
-     * @param stdObject $format the format object so that helper methods can be used
+     * @param qformat_xml $format the format object so that helper methods can be used
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
@@ -449,7 +453,7 @@ class qtype_multichoiceset extends question_type {
      *
      * @param mixed $data the segment of data containing the question
      * @param stdObject $question question object processed (so far) by standard import code
-     * @param stdObject $format the format object so that helper methods can be used (in particular error())
+     * @param qformat_xml $format the format object so that helper methods can be used (in particular error())
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return stdObject question object suitable for save_options() call or false if cannot handle
      */
@@ -544,7 +548,7 @@ class qtype_multichoiceset extends question_type {
      * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_wordtable
      *
      * @param stdObject $question the question object
-     * @param stdObject $format the format object so that helper methods can be used
+     * @param qformat_xml $format the format object so that helper methods can be used
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
@@ -575,7 +579,7 @@ class qtype_multichoiceset extends question_type {
      * cf. https://moodle.org/plugins/pluginversions.php?plugin=qformat_htmltable
      *
      * @param stdObject $question the question object
-     * @param stdObject $format the format object so that helper methods can be used
+     * @param qformat_xml $format the format object so that helper methods can be used
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return string the data to append to the output buffer or false if error
      */
@@ -627,7 +631,7 @@ class qtype_multichoiceset_hint extends question_hint_with_parts {
     /**
      * Adjust the display options
      *
-     * @param stdClass $options display options
+     * @param question_display_options $options display options
      * @return void
      */
     public function adjust_display_options(question_display_options $options) {

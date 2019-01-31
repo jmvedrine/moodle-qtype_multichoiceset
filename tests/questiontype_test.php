@@ -36,6 +36,7 @@ require_once($CFG->dirroot . '/question/type/multichoiceset/questiontype.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset_test extends advanced_testcase {
+    /** @var $qtype the question type. */
     protected $qtype;
 
     protected function setUp() {

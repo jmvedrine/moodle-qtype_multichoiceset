@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Mobile output class for question type multichoiceset.
+ *
+ * @package qtype_multichoiceset
+ * @copyright 2018 Zvonko Martinovic
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace qtype_multichoiceset\output;
 
 defined('MOODLE_INTERNAL') || die();
@@ -22,12 +30,17 @@ defined('MOODLE_INTERNAL') || die();
  * Mobile output class for question type multichoiceset.
  *
  * @package qtype_multichoiceset
- * @copyright 2018 The Open University
+ * @copyright 2018 Zvonko Martinovic
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mobile {
 
-    public static function mobile_get_multichoiceset() {
+    /**
+     * Returns the gapfill question type for the quiz in the mobile app.
+     *
+     * @return void
+     */
+     public static function mobile_get_multichoiceset() {
         global $CFG;
         // General notes:
         // If you have worked on mobile activities, there is no cmid or courseid in $args here.

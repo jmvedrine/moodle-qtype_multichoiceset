@@ -25,21 +25,21 @@ defined('MOODLE_INTERNAL') || die();
 
 $addons = array(
     "qtype_multichoiceset" => array(
-    	'handlers' => array( // Different places where the plugin will display content.
+        'handlers' => array( // Different places where the plugin will display content.
             'multichoiceset' => array( // Handler unique name (alphanumeric).
-            	'displaydata' => array(
+                'displaydata' => array(
                     'title' => 'All-or-Nothing Multiple Choice question',
-                	'icon' => $CFG->wwwroot . '/question/type/multichoiceset/pix/icon.gif',
-                	'class' => '',
-            	),
-             	'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the plugin)
-            	'method' => 'mobile_get_multichoiceset', // Main function in \qtype_multichoiceset\output
-            	'offlinefunctions' => array(
+                    'icon' => $CFG->wwwroot . '/question/type/multichoiceset/pix/icon.gif',
+                    'class' => '',
+                ),
+                 'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the plugin).
+                'method' => 'mobile_get_multichoiceset', // Main function in \qtype_multichoiceset\output.
+                'offlinefunctions' => array(
                     'mobile_get_multichoiceset' => array(), // Function that needs to be downloaded for offline use.
                 )
             )
         ),
-    	'lang' => array(	// Language strings that are used in all the handlers.
+        'lang' => array(    // Language strings that are used in all the handlers.
                 array('pluginname', 'qtype_multichoiceset')
         )
     )
