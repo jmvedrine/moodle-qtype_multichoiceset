@@ -40,7 +40,7 @@ class mobile {
      *
      * @return void
      */
-     public static function mobile_get_multichoiceset() {
+    public static function mobile_get_multichoiceset() {
         global $CFG;
         // General notes:
         // If you have worked on mobile activities, there is no cmid or courseid in $args here.
