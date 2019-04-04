@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'qtype_multichoiceset', language 'en', branch 'MOODLE_20_STABLE'
+ * Strings for component 'qtype_multichoiceset', language 'es', branch 'MOODLE_20_STABLE'
  *
  * @package   qtype_multichoiceset
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
