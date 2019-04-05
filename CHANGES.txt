@@ -2,6 +2,7 @@ Release notes
 -------------
 
 Date          Version   Comment
+2019/04/05    1.6.4     Add support for Spanish (International) (provided by Carlos Pasqualini)
 2019/01/29    1.6.3     Add support for mobile app 3.6 (provided by Zvonko Martinovic)
 2019/01/08    1.6.2     Fix handling of default numbering style
 2018/02/05    1.6.1     Fix presentation of answers in Boost theme, fix some PHPDocs warnings
