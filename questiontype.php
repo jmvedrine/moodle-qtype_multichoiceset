@@ -359,7 +359,7 @@ class qtype_multichoiceset extends question_type {
      * Get the available question numbering styles.
      *
      * @return array of the numbering styles supported. For each one, there
-     *      should be a lang string answernumberingxxx in teh qtype_multichoice
+     *      should be a lang string answernumberingxxx in the qtype_multichoice
      *      language file, and a case in the switch statement in number_in_style,
      *      and it should be listed in the definition of this column in install.xml.
      */
