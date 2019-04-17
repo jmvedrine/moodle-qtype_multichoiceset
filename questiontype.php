@@ -53,7 +53,7 @@ class qtype_multichoiceset extends question_type {
     public function get_question_options($question) {
         global $DB, $OUTPUT;
 
-        $question->options = $DB->get_record('qtype_multichoice_options', ['questionid' => $question->id]);
+        $question->options = $DB->get_record('qtype_multichoiceset_options', ['questionid' => $question->id]);
 
         if ($question->options === false) {
             // If this has happened, then we have a problem.
