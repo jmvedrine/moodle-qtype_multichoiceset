@@ -19,7 +19,7 @@ Feature: Test importing All-or-Nothing Multiple Choice questions
 
   @javascript @_file_upload
   Scenario: import All-or-Nothing Multiple Choice question.
-    When I navigate to "Import" node in "Course administration > Question bank"
+    When I navigate to "Question bank > Import" in current page administration
     And I set the field "id_format_xml" to "1"
     And I upload "question/type/multichoiceset/tests/fixtures/qtype_sample_multichoiceset.xml" file to "Import" filemanager
     And I press "id_submitbutton"
