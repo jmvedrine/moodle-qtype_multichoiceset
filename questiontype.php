@@ -37,8 +37,9 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
  */
 class qtype_multichoiceset extends question_type {
     /**
-     * @return whether the question_answers.answer field needs to have
-     * restore_decode_content_links_worker called on it.
+     * Can the answer fields contain HTML?
+     * 
+     * @return bool return true if restore_decode_content_links_worker should be called.
      */
     public function has_html_answers() {
         return true;
@@ -156,7 +157,7 @@ class qtype_multichoiceset extends question_type {
      * Save all hints.
      *
      * @param stdObject $formdata form data of question
-     * @param boolean $withparts whether the question has parts
+     * @param bool $withparts whether the question has parts
      * @return stdObject
      */
     public function save_hints($formdata, $withparts = false) {
@@ -564,7 +565,7 @@ class qtype_multichoiceset extends question_type {
      *
      * @param mixed $data the segment of data containing the question
      * @param stdObject $question question object processed (so far) by standard import code
-     * @param stdObject $format the format object so that helper methods can be used (in particular error())
+     * @param qformat_xml $format the format object so that helper methods can be used (in particular error())
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info)
      * @return stdObject question object suitable for save_options() call or false if cannot handle
      */
@@ -598,7 +599,7 @@ class qtype_multichoiceset extends question_type {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_multichoiceset_hint extends question_hint_with_parts {
-    /** @var boolean whether to show the feedback for each choice. */
+    /** @var bool whether to show the feedback for each choice. */
     public $showchoicefeedback;
 
     /**
