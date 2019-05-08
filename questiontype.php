@@ -38,7 +38,7 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
 class qtype_multichoiceset extends question_type {
     /**
      * Can the answer fields contain HTML?
-     * 
+     *
      * @return bool return true if restore_decode_content_links_worker should be called.
      */
     public function has_html_answers() {
