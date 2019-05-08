@@ -22,7 +22,7 @@ Feature: Preview a All-or-Nothing Multiple Choice question
       | Test questions   | multichoiceset | All-or-nothing-001 | two_of_four |
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I navigate to "Question bank" node in "Course administration"
+    And I navigate to "Question bank" in current page administration
 
   @javascript @_switch_window
   Scenario: Preview a Multiple choice question and submit a wrong response.
@@ -54,4 +54,3 @@ Feature: Preview a All-or-Nothing Multiple Choice question
     And I should see "The odd numbers are One and Three."
     And I should see "The correct answers are: One, Three"
     And I switch to the main window
-

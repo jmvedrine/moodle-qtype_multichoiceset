@@ -22,7 +22,7 @@ Feature: Test editing a All-or-Nothing Multiple Choice question
       | Test questions   | multichoiceset | All-or-nothing for editing  | two_of_four |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I navigate to "Question bank" node in "Course administration"
+    And I navigate to "Question bank" in current page administration
 
   Scenario: Edit a All-or-Nothing Multiple Choice question
     When I click on "Edit" "link" in the "All-or-nothing for editing" "table_row"
@@ -34,4 +34,3 @@ Feature: Test editing a All-or-Nothing Multiple Choice question
       | Question name | Edited All-or-nothing name |
     And I press "id_submitbutton"
     Then I should see "Edited All-or-nothing name"
-
