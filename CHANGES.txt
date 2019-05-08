@@ -2,6 +2,7 @@ Release notes
 -------------
 
 Date          Version   Comment
+2019/05/08    1.6.5     Add support for combinable question type, improve error recovery and testing (provided by Jean-Michel Vedrine)
 2019/04/05    1.6.4     Add support for Spanish (International) (provided by Carlos Pasqualini)
 2019/01/29    1.6.3     Add support for mobile app 3.6 (provided by Zvonko Martinovic)
 2019/01/08    1.6.2     Fix handling of default numbering style

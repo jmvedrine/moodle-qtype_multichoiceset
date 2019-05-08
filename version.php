@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2019043000;
+$plugin->version   = 2019050800;
 
 $plugin->requires  = 2015111600;
 
