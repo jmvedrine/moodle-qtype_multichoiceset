@@ -6,8 +6,9 @@
 
 .que.multichoiceset .answer div.r0,
 .que.multichoiceset .answer div.r1 {
-    padding: 0.3em 0 0.3em 25px;
-    text-indent: -25px;
+    display: flex;
+    margin: 0.25rem 0;
+    align-items: flex-start;
 }
 
 .que.multichoiceset .answer div.r0 label,
@@ -19,11 +20,6 @@
     text-indent: 0;
 }
 
-/* Moodle 3.9 presentation fix to vertically align the checkbox and the answer text on the same line. */
-.multichoiceset .answer label.w-100 {
-margin-top: -1.5em;
-}
-
 .que.multichoiceset .answer div.r0 .icon.fa-check,
 .que.multichoiceset .answer div.r1 .icon.fa-check,
 .que.multichoiceset .answer div.r0 .icon.fa-remove,
@@ -33,9 +29,8 @@ margin-top: -1.5em;
 
 .que.multichoiceset .answer div.r0 input,
 .que.multichoiceset .answer div.r1 input {
-    margin: 0 5px;
-    padding: 0;
-    width: 15px;
+    margin: 0.3rem 0.5rem;
+    width: 14px;
 }
 
 /* Editing form. */

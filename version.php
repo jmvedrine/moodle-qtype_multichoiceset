@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for the multiple choice all or nothing question type.
+ * Version information for the multiple choice All-or-Nothing question type.
  *
  * @package    qtype_multichoiceset
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
@@ -25,14 +25,14 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2020071000;
+$plugin->version   = 2020111600;
 
 $plugin->requires  = 2020061500;
 
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.6.6 for Moodle 3.9';
+$plugin->release   = '1.6.7 for Moodle 3.9';
 
 $plugin->dependencies = array(
-    'qtype_multichoice' => ANY_VERSION,
+    'qtype_multichoice' => 2020061500,
 );
