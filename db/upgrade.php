@@ -248,6 +248,40 @@ function xmldb_qtype_multichoiceset_upgrade($oldversion) {
     // Moodle v3.4.0 release upgrade line.
     // Put any upgrade step following this.
 
+    // Moodle v3.5.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Moodle v3.6.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Moodle v3.7.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Moodle v3.8.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Add a new checkbox for the question author to decide
+    // Whether standard instruction ('Select one or more:') is displayed.
+    $dbman = $DB->get_manager();
+    $newversion = 2020111700;
+    if ($oldversion < $newversion) {
+
+        // Define field showstandardinstruction to be added to qtype_multichoiceset_options.
+        $table = new xmldb_table('qtype_multichoiceset_options');
+        $field = new xmldb_field('showstandardinstruction', XMLDB_TYPE_INTEGER, '2',
+            null, XMLDB_NOTNULL, null, '1', 'shownumcorrect');
+
+        // Conditionally launch add field showstandardinstruction.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Multichoice savepoint reached.
+        upgrade_plugin_savepoint(true, $newversion, 'qtype', 'multichoiceset');
+    }
+    // Automatically generated Moodle v3.9.0 release upgrade line.
+    // Put any upgrade step following this.
+
     return true;
 }
 

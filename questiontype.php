@@ -85,13 +85,14 @@ class qtype_multichoiceset extends question_type {
         $options->incorrectfeedback = get_string('incorrectfeedbackdefault', 'question');
         $options->incorrectfeedbackformat = FORMAT_HTML;
 
-        $config = get_config('qtype_multichoice');
+        $config = get_config('qtype_multichoiceset');
         $options->single = $config->answerhowmany;
         if (isset($question->layout)) {
             $options->layout = $question->layout;
         }
         $options->answernumbering = $config->answernumbering;
         $options->shuffleanswers = $config->shuffleanswers;
+        $options->showstandardinstruction = 0;
         $options->shownumcorrect = 1;
 
         return $options;
@@ -172,6 +173,7 @@ class qtype_multichoiceset extends question_type {
             $options->questionid = $question->id;
             $options->correctfeedback = '';
             $options->incorrectfeedback = '';
+            $options->showstandardinstruction = 0;
             $options->id = $DB->insert_record('qtype_multichoiceset_options', $options);
         }
 
@@ -180,6 +182,7 @@ class qtype_multichoiceset extends question_type {
         }
         $options->answernumbering = $question->answernumbering;
         $options->shuffleanswers = $question->shuffleanswers;
+        $options->showstandardinstruction = !empty($question->showstandardinstruction);
         $options->correctfeedback = $this->import_or_save_files($question->correctfeedback,
                 $context, 'question', 'correctfeedback', $question->id);
         $options->correctfeedbackformat = $question->correctfeedback['format'];
@@ -311,6 +314,7 @@ class qtype_multichoiceset extends question_type {
         parent::initialise_question_instance($question, $questiondata);
         $question->shuffleanswers = $questiondata->options->shuffleanswers;
         $question->answernumbering = $questiondata->options->answernumbering;
+        $question->showstandardinstruction = $questiondata->options->showstandardinstruction;
         if (!empty($questiondata->options->layout)) {
             $question->layout = $questiondata->options->layout;
         } else {

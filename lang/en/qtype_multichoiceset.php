@@ -23,9 +23,7 @@
  */
 
 $string['deletedchoice'] = 'This choice was deleted after the attempt was started.';
-$string['distractor'] = 'Incorrect';
 $string['errnocorrect'] = 'At least one of the choices should be correct so that it is possible to get a full grade for this question.';
-$string['included'] = 'Correct';
 $string['pluginname'] = 'All-or-Nothing Multiple Choice';
 $string['pluginname_help'] = 'After an optional introduction, the respondent can choose one or more answers.  If the chosen answers correspond exactly to the "Correct" choices defined in the question, the respondent gets 100%.  If he/she chooses any "Incorrect" choices or does not select all of the "Correct" choices, the grade is 0%. At least one choice must be marked correct for each question.  Add a "None of the above" option to handle a question where none of the other choices are correct.  Unlike the multiple choice question with fractional grades, the only possible grades for an all-or-nothing question are 100% or 0%';
 $string['pluginname_link'] = 'question/type/multichoiceset';
@@ -33,5 +31,5 @@ $string['pluginnameadding'] = 'Adding an All-or-Nothing Multiple Choice Question
 $string['pluginnameediting'] = 'Editing an All-or-Nothing Multiple Choice Question';
 $string['pluginnamesummary'] = 'Allows the selection of multiple responses from a pre-defined list and uses all-or-nothing grading (100% or 0%).';
 $string['privacy:metadata'] = 'The All-or-Nothing Multiple Choice plugin does not store any personal data.';
-$string['correctanswer'] = 'Correct';
 $string['showeachanswerfeedback'] = 'Show the feedback for the selected responses.';
+$string['showstandardinstruction_help'] = 'Whether to show the instructions "Select one or more:" before All-or-Nothing multiple choice answers.';

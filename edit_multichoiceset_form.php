@@ -45,7 +45,12 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         $mform->addElement('select', 'answernumbering',
                 get_string('answernumbering', 'qtype_multichoice'),
                 qtype_multichoice::get_numbering_styles());
-        $mform->setDefault('answernumbering', get_config('qtype_multichoice', 'answernumbering'));
+        $mform->setDefault('answernumbering', get_config('qtype_multichoiceset', 'answernumbering'));
+
+        $mform->addElement('selectyesno', 'showstandardinstruction',
+            get_string('showstandardinstruction', 'qtype_multichoice'), null, null, [0, 1]);
+        $mform->addHelpButton('showstandardinstruction', 'showstandardinstruction', 'qtype_multichoiceset');
+        $mform->setDefault('showstandardinstruction', 0);
 
         $this->add_per_answer_fields($mform, get_string('choiceno', 'qtype_multichoice', '{no}'),
                 null, max(5, QUESTION_NUMANS_START));
@@ -141,6 +146,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
             $question->shuffleanswers = $question->options->shuffleanswers;
             $question->answernumbering = $question->options->answernumbering;
             $question->shownumcorrect = $question->options->shownumcorrect;
+            $question->showstandardinstruction = $question->options->showstandardinstruction;
             // Prepare feedback editor to display files in draft area.
             foreach (array('correctfeedback', 'incorrectfeedback') as $feedbackname) {
                 $draftid = file_get_submitted_draft_itemid($feedbackname);
