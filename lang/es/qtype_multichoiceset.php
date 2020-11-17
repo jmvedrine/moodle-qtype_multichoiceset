@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['correctanswer'] = 'Correcto';
 $string['deletedchoice'] = 'Esta opción se eliminó después de que se inició el intento.';
 $string['errnocorrect'] = 'Al menos una de las opciones debe ser correcta para que sea posible obtener una calificación completa para esta pregunta.';
 $string['pluginname'] = 'Opción múltiple de todo o nada';

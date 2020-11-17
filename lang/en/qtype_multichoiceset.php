@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['correctanswer'] = 'Correct';
 $string['deletedchoice'] = 'This choice was deleted after the attempt was started.';
 $string['errnocorrect'] = 'At least one of the choices should be correct so that it is possible to get a full grade for this question.';
 $string['pluginname'] = 'All-or-Nothing Multiple Choice';
@@ -32,4 +33,5 @@ $string['pluginnameediting'] = 'Editing an All-or-Nothing Multiple Choice Questi
 $string['pluginnamesummary'] = 'Allows the selection of multiple responses from a pre-defined list and uses all-or-nothing grading (100% or 0%).';
 $string['privacy:metadata'] = 'The All-or-Nothing Multiple Choice plugin does not store any personal data.';
 $string['showeachanswerfeedback'] = 'Show the feedback for the selected responses.';
+$string['showstandardinstruction'] = 'Show standard instructions';
 $string['showstandardinstruction_help'] = 'Whether to show the instructions "Select one or more:" before All-or-Nothing multiple choice answers.';
