@@ -48,7 +48,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
         $mform->setDefault('answernumbering', get_config('qtype_multichoiceset', 'answernumbering'));
 
         $mform->addElement('selectyesno', 'showstandardinstruction',
-            get_string('showstandardinstruction', 'qtype_multichoice'), null, null, [0, 1]);
+            get_string('showstandardinstruction', 'qtype_multichoiceset'), null, null, [0, 1]);
         $mform->addHelpButton('showstandardinstruction', 'showstandardinstruction', 'qtype_multichoiceset');
         $mform->setDefault('showstandardinstruction', 0);
 
