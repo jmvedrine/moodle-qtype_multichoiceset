@@ -487,6 +487,7 @@ class qtype_multichoiceset extends question_type {
             $expout .= "    <shownumcorrect/>\n";
         }
         $expout .= "    <answernumbering>{$question->options->answernumbering}</answernumbering>\n";
+        $expout .= "    <showstandardinstruction>{$question->options->showstandardinstruction}</showstandardinstruction>\n";
         $expout .= $format->write_answers($question->options->answers);
 
         return $expout;
